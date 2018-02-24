@@ -8,26 +8,34 @@
     android:fillEnabled="true"
     android:background="@drawable/background">
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <TextView
+        android:id="@+id/txt_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:onClick="clk_img"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        android:text="برگشت" />
+    <TextView
+        android:id="@+id/txt_play_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="بازی مجدد" />
+    <TextView
+        android:id="@+id/txt_rules"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="قوانین" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+
+    <ImageView
+        android:id="@+id/img_move_button"
+        android:layout_width="130dp"
+        android:layout_height="100dp"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageView2"
+        android:clickable="true"
         android:onClick="clk_btn"
-        android:layout_marginLeft="103dp"
-        android:layout_marginStart="103dp"
-        android:layout_marginTop="49dp"
-        android:text="Button" />
+
+        app:srcCompat="@drawable/move_button" />
+
+
 
     <ImageView
         android:id="@+id/img_boat"
@@ -56,6 +64,14 @@
         />
     <ImageView
         android:id="@+id/img_obj3"
+        android:layout_width="130dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:visibility="gone"
+        android:clickable="true"
+        android:onClick="clk_obj"/>
+    <ImageView
+        android:id="@+id/img_obj4"
         android:layout_width="130dp"
         android:layout_height="100dp"
         android:layout_alignParentStart="true"
