@@ -2,14 +2,17 @@ package com.sputa.rivercrossing;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView[] img_in_top = new ImageView[7];
 
-
+    String
+            font_name = "";
+    Typeface tf;
     int
             obj_count = 0;
     ImageView[] img_obj = new ImageView[11];
@@ -56,6 +61,58 @@ public class MainActivity extends AppCompatActivity {
         lp_img_move_button.topMargin = (int) (screenHeight * 0.41);
         lp_img_move_button.setMarginStart(((int) (screenWidth * 0.01)));
         img_move_button.setLayoutParams(lp_img_move_button);
+
+        ImageView img_music = findViewById(R.id.img_music);
+        RelativeLayout.LayoutParams lp_img_music = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.1));
+        lp_img_music.topMargin = (int) (screenHeight * 0.8);
+        lp_img_music.setMarginStart(((int) (screenWidth * 0.01)));
+        img_music.setLayoutParams(lp_img_music);
+
+
+
+        font_name = "fonts/BYekan.ttf";
+        tf = Typeface.createFromAsset(getAssets(),font_name );
+        TextView txt_back = findViewById(R.id.txt_back);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        layoutParams.setMargins(0, (int) (screenHeight * 0.005), (int) (screenWidth * 0.37), 0);
+        txt_back.setLayoutParams(layoutParams);
+        txt_back.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.035));
+        txt_back.setTypeface(tf);
+
+        TextView txt_play_again = findViewById(R.id.txt_play_again);
+        RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams1.setMargins(0, (int) (screenHeight * 0.005), (int) (screenWidth * 0.20), 0);
+        txt_play_again.setLayoutParams(layoutParams1);
+        txt_play_again.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.035));
+        txt_play_again.setTypeface(tf);
+
+        TextView txt_rules = findViewById(R.id.txt_rules);
+        RelativeLayout.LayoutParams layoutParams2 = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams2.setMargins(0, (int) (screenHeight * 0.005), (int) (screenWidth * 0.07), 0);
+        txt_rules.setLayoutParams(layoutParams2);
+        txt_rules.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.035));
+        txt_rules.setTypeface(tf);
+
+        TextView txt_timer = findViewById(R.id.txt_timer);
+        RelativeLayout.LayoutParams layoutParams3 = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams3.setMargins(0, (int) (screenHeight * 0.228), (int) (screenWidth * 0.649), 0);
+        txt_timer.setLayoutParams(layoutParams3);
+        txt_timer.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.027));
+        txt_timer.setTypeface(tf);
+
+        TextView txt_helps = findViewById(R.id.txt_helps);
+        RelativeLayout.LayoutParams layoutParams4 = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams4.setMargins(0, (int) (screenHeight * 0.805), (int) (screenWidth * 0.142), 0);
+        txt_helps.setLayoutParams(layoutParams4);
+        txt_helps.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.033));
+        txt_helps.setTypeface(tf);
+
 
 
         for (int i = 1; i <= 10; i++) {

@@ -12,17 +12,35 @@
         android:id="@+id/txt_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="برگشت" />
+        android:text="برگشت"
+        android:textColor="@android:color/white" />
+
     <TextView
         android:id="@+id/txt_play_again"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="بازی مجدد" />
+        android:text="بازی مجدد"
+        android:textColor="@android:color/white" />
+
     <TextView
         android:id="@+id/txt_rules"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="قوانین" />
+        android:text="قوانین"
+        android:textColor="@android:color/white" />
+    <TextView
+        android:id="@+id/txt_helps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="راهنمایی"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/txt_timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15:36"
+        android:textColor="@android:color/white" />
 
 
     <ImageView
@@ -34,6 +52,13 @@
         android:onClick="clk_btn"
 
         app:srcCompat="@drawable/move_button" />
+    <ImageView
+        android:id="@+id/img_music"
+        android:layout_width="130dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:clickable="true"
+        app:srcCompat="@drawable/music" />
 
 
 
