@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void level1_set() {
-        obj_count = 3;
+        obj_count = 4;
 
         img_obj[1] = findViewById(R.id.img_obj1);
         //     img_obj1.setBackgroundColor(Color.parseColor("#000000"));
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         img_obj[1].setVisibility(View.VISIBLE);
         RelativeLayout.LayoutParams lp_img_farmer = new RelativeLayout.LayoutParams((int) (screenWidth * .08), (int) (screenHeight * 0.25));
         img_objects_top[1] = (int) (screenHeight * 0.6);
-        img_objects_start[1] = (int) (screenWidth * 0.82);
+        img_objects_start[1] = (int) (screenWidth * 0.87);
         lp_img_farmer.topMargin = (img_objects_top[1]);
         lp_img_farmer.setMarginStart(img_objects_start[1]);
         img_obj[1].setLayoutParams(lp_img_farmer);
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         img_obj[2].setImageResource(R.drawable.cabbage);
         img_obj[2].setVisibility(View.VISIBLE);
         RelativeLayout.LayoutParams lp_img_cabbage = new RelativeLayout.LayoutParams((int) (screenWidth * 0.08), (int) (screenHeight * 0.12));
-        img_objects_start[2] = (int) (screenWidth * 0.725);
+        img_objects_start[2] = (int) (screenWidth * 0.8);
         img_objects_top[2] = ((int) (screenHeight * 0.74));
         lp_img_cabbage.topMargin = (img_objects_top[2]);
         lp_img_cabbage.setMarginStart(img_objects_start[2]);
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         img_obj[3].setImageResource(R.drawable.wolf);
         img_obj[3].setVisibility(View.VISIBLE);
         RelativeLayout.LayoutParams lp_img_wolf = new RelativeLayout.LayoutParams((int) (screenWidth * 0.10), (int) (screenHeight * 0.16));
-        img_objects_start[3] = (int) (screenWidth * 0.61);
+        img_objects_start[3] = (int) (screenWidth * 0.70);
         img_objects_top[3] = (int) (screenHeight * 0.715);
         lp_img_wolf.topMargin = (img_objects_top[3]);
         lp_img_wolf.setMarginStart(img_objects_start[3]);
@@ -165,34 +166,35 @@ public class MainActivity extends AppCompatActivity {
         img_obj[3].setContentDescription("wolf");
 
 
-//        img_obj[4] = findViewById(R.id.img_obj4);
-////        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
-//        img_obj[4].setImageResource(R.drawable.cabbage);
-//        img_obj[4].setVisibility(View.VISIBLE);
-//        RelativeLayout.LayoutParams lp_img_cabbage_new = new RelativeLayout.LayoutParams((int) (screenWidth * 0.08), (int) (screenHeight * 0.12));
-//        img_objects_start[4] = (int) (screenWidth * 0.51);
-//        img_objects_top[4] = (int) (screenHeight * 0.74);
-//        lp_img_cabbage_new.topMargin = (img_objects_top[4]);
-//        lp_img_cabbage_new.setMarginStart(img_objects_start[4]);
-//        img_obj[4].setLayoutParams(lp_img_cabbage_new);
-//        img_obj[4].setContentDescription("cabbage_new");
+        img_obj[4] = findViewById(R.id.img_obj4);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[4].setImageResource(R.drawable.sheep);
+        img_obj[4].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_sheep = new RelativeLayout.LayoutParams((int) (screenWidth * 0.10), (int) (screenHeight * 0.16));
+        img_objects_start[4] = (int) (screenWidth * 0.60);
+        img_objects_top[4] = (int) (screenHeight * 0.715);
+        lp_img_sheep.topMargin = (img_objects_top[4]);
+        lp_img_sheep.setMarginStart(img_objects_start[4]);
+        img_obj[4].setLayoutParams(lp_img_sheep);
+        img_obj[4].setContentDescription("sheep");
+
+
+
+
+
+
+
+
 
     }
 
     public void clk_img(View view) {
-
-
-//       TranslateAnimation trans=new TranslateAnimation(0 ,-100 ,0 , 100);
-//
-//        trans.setDuration(500);
-//        ImageView img_view = findViewById(R.id.imageView2);
-//        trans.setFillAfter(true);
-//        trans.setFillEnabled(true);
-//        img_view.startAnimation(trans);
-//        Toast.makeText(this, "majid", Toast.LENGTH_SHORT).show();
     }
 
     public void clk_btn(View view) {
+
+
+
 //        TranslateAnimation trans=new TranslateAnimation(0 ,-100 ,0 , 100);
 //
 //        trans.setDuration(500);
@@ -204,12 +206,20 @@ public class MainActivity extends AppCompatActivity {
 //
 //        ImageView img_view = findViewById(R.id.imageView2);
 //        img_view.animate().x((int)(screenWidth/2)).y(100).setDuration(500).start();
+
+
+
         if (boat_passengers[1] != null || boat_passengers[2] != null) {
-            if (boat_side.equals("down")) {
+
+            boolean
+                allow_to_cross = false;
+
+
+            if (boat_side.equals("down") && allow_to_cross) {
                 int
-                        hight = img_boat.getHeight();
+                        hight = 0;
                 int
-                        width = img_boat.getWidth();
+                        width = 0;
 
                 int new_top = ((int) (screenHeight * 0.37));
                 int new_strt = ((int) (screenWidth * 0.55));
@@ -238,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
                     boat_side = "down";
                 }
             } else if (boat_side.equals("up")) {
+
                 int
                         hight = img_boat.getHeight();
                 int
@@ -254,8 +265,6 @@ public class MainActivity extends AppCompatActivity {
                     new_strt = ((int) (screenWidth * 0.65)) - width;
                     boat_passengers[1].animate().x(new_strt).y(new_top).setDuration(500).start();
                 }
-
-
                 if (boat_passengers[2] != null) {
                     hight = boat_passengers[2].getHeight();
                     width = boat_passengers[2].getWidth();
@@ -263,7 +272,6 @@ public class MainActivity extends AppCompatActivity {
                     new_strt = ((int) (screenWidth * 0.55)) - width;
                     boat_passengers[2].animate().x(new_strt).y(new_top).setDuration(500).start();
                 }
-
                 if (boat_side.equals("down")) {
                     boat_side = "up";
                 } else {
@@ -271,9 +279,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
-
 
     public void clk_obj(View view) {
         ImageView
@@ -340,7 +346,6 @@ public class MainActivity extends AppCompatActivity {
                         boat_passengers[2] = img_my_obj;
                         flag = 1;
                     }
-
                 }
             }
             if (flag == 0) {
@@ -362,15 +367,11 @@ public class MainActivity extends AppCompatActivity {
                         img_location[i] = 1;
                     } else {
                         for (int j = 1; j <= 6; j++) {
-
                             if (img_in_top[j] == null) {
                                 RelativeLayout.LayoutParams lp_img_my_obj;
-
                                 lp_img_my_obj = (RelativeLayout.LayoutParams) img_my_obj.getLayoutParams();
-                                    lp_img_my_obj.topMargin = ((int) (screenHeight * 0.60)) - img_my_obj.getHeight();
-
-                                    lp_img_my_obj.setMarginStart(((int) (screenWidth * 0.09)) + ((int) (screenWidth * 0.1)) * j);
-
+                                lp_img_my_obj.topMargin = ((int) (screenHeight * 0.60)) - img_my_obj.getHeight();
+                                lp_img_my_obj.setMarginStart(((int) (screenWidth * 0.09)) + ((int) (screenWidth * 0.1)) * j);
                                 img_my_obj.setLayoutParams(lp_img_my_obj);
                                 img_in_top[j] = img_my_obj;
                                 img_location[i] = 2;

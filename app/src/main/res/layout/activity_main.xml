@@ -8,6 +8,7 @@
     android:fillEnabled="true"
     android:background="@drawable/background">
 
+
     <TextView
         android:id="@+id/txt_back"
         android:layout_width="wrap_content"
@@ -60,8 +61,6 @@
         android:clickable="true"
         app:srcCompat="@drawable/music" />
 
-
-
     <ImageView
         android:id="@+id/img_boat"
         android:layout_width="130dp"
@@ -85,7 +84,6 @@
         android:visibility="gone"
         android:clickable="true"
         android:onClick="clk_obj"
-
         />
     <ImageView
         android:id="@+id/img_obj3"
@@ -102,8 +100,6 @@
         android:layout_alignParentStart="true"
         android:visibility="gone"
         android:clickable="true"
-        android:onClick="clk_obj"
-
-        />
+        android:onClick="clk_obj"/>
 
 </RelativeLayout>
