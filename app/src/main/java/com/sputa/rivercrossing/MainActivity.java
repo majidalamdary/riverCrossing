@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView[] img_obj = new ImageView[11];
     ImageView img_boat;
     ImageView img_move_button;
+    public int level_id=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +120,8 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 1; i <= 10; i++) {
             img_location[i] = 1;
         }
-        level1_set();
+        if(level_id==1)
+            level1_set();
 
 
     }
@@ -138,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         lp_img_farmer.setMarginStart(img_objects_start[1]);
         img_obj[1].setLayoutParams(lp_img_farmer);
         img_obj[1].setContentDescription("farmer");
-
+        img_obj[1].setTextDirection(1);
 
         img_obj[2] = findViewById(R.id.img_obj2);
 //        img_obj2.setBackgroundColor(Color.parseColor("#000000"));
@@ -151,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
         lp_img_cabbage.setMarginStart(img_objects_start[2]);
         img_obj[2].setLayoutParams(lp_img_cabbage);
         img_obj[2].setContentDescription("cabbage");
+        img_obj[2].setTextDirection(1);
 
 
         img_obj[3] = findViewById(R.id.img_obj3);
@@ -164,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         lp_img_wolf.setMarginStart(img_objects_start[3]);
         img_obj[3].setLayoutParams(lp_img_wolf);
         img_obj[3].setContentDescription("wolf");
+        img_obj[3].setTextDirection(1);
 
 
         img_obj[4] = findViewById(R.id.img_obj4);
@@ -177,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         lp_img_sheep.setMarginStart(img_objects_start[4]);
         img_obj[4].setLayoutParams(lp_img_sheep);
         img_obj[4].setContentDescription("sheep");
+        img_obj[4].setTextDirection(1);
 
 
 
@@ -189,6 +194,96 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clk_img(View view) {
+    }
+    String
+        cant_cros_message="";
+    private boolean check_can_cross()
+    {
+        boolean result=true;
+      //  Toast.makeText(this, String.valueOf(boat_passengers[1].getTextDirection()), Toast.LENGTH_SHORT).show();
+        if(level_id==1) {
+            boolean
+                is_farmer_boarder =false;
+            if(boat_passengers[1]!=null)
+            {
+                if(boat_passengers[1].equals(img_obj[1]))
+                    is_farmer_boarder=true;
+            }
+            if(boat_passengers[2]!=null)
+            {
+                if(boat_passengers[2].equals(img_obj[1]))
+                    is_farmer_boarder=true;
+            }
+
+            if (!is_farmer_boarder) {
+                cant_cros_message = "کشاورز حتما باید در قایق باشد";
+                Toast.makeText(this, cant_cros_message, Toast.LENGTH_SHORT).show();
+                result= false;
+            }
+            else
+            {
+                if(boat_passengers[1]!=null && boat_side.equals("down"))
+                {
+                    boat_passengers[1].setTextDirection(2);
+                }
+                if(boat_passengers[2]!=null && boat_side.equals("down"))
+                {
+                    boat_passengers[2].setTextDirection(2);
+                }
+                if(boat_passengers[1]!=null && boat_side.equals("up"))
+                {
+                    boat_passengers[1].setTextDirection(1);
+                }
+                if(boat_passengers[2]!=null && boat_side.equals("up"))
+                {
+                    boat_passengers[2].setTextDirection(1);
+                }
+                boolean
+                    cant=false;
+//                Toast.makeText(this,String.valueOf(img_obj[1].getTextDirection()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, String.valueOf(img_obj[2].getTextDirection()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, String.valueOf(img_obj[4].getTextDirection()), Toast.LENGTH_SHORT).show();
+
+                if((img_obj[1].getTextDirection()!=1 && img_obj[2].getTextDirection()==1 && img_obj[4].getTextDirection()==1) || (img_obj[1].getTextDirection()!=2 && img_obj[2].getTextDirection()==2 && img_obj[4].getTextDirection()==2))
+                {
+                    Toast.makeText(this, "گوسفند و کلم نمی توانند تنها باشند", Toast.LENGTH_SHORT).show();
+                    cant=true;
+                }
+                else if((img_obj[1].getTextDirection()!=1 && img_obj[3].getTextDirection()==1 && img_obj[4].getTextDirection()==1) || (img_obj[1].getTextDirection()!=2 && img_obj[3].getTextDirection()==2 && img_obj[4].getTextDirection()==2))
+                {
+                    Toast.makeText(this, "گوسفند و گرگ نمی توانند تنها باشند", Toast.LENGTH_SHORT).show();
+                    cant=true;
+                }
+
+                if(cant)
+                {
+                    if(boat_passengers[1]!=null && boat_side.equals("down"))
+                    {
+                        boat_passengers[1].setTextDirection(1);
+                    }
+                    if(boat_passengers[2]!=null && boat_side.equals("down"))
+                    {
+                        boat_passengers[2].setTextDirection(1);
+                    }
+                    if(boat_passengers[1]!=null && boat_side.equals("up"))
+                    {
+                        boat_passengers[1].setTextDirection(2);
+                    }
+                    if(boat_passengers[2]!=null && boat_side.equals("up"))
+                    {
+                        boat_passengers[2].setTextDirection(2);
+                    }
+               //     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                    result= false;
+                }
+
+
+            }
+
+
+        }
+      //  Toast.makeText(this, String.valueOf(result), Toast.LENGTH_SHORT).show();
+        return  result;
     }
 
     public void clk_btn(View view) {
@@ -214,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
             boolean
                 allow_to_cross = false;
 
-
+            allow_to_cross = check_can_cross();
             if (boat_side.equals("down") && allow_to_cross) {
                 int
                         hight = 0;
@@ -231,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
                     new_top = ((int) (screenHeight * 0.550)) - hight;
                     new_strt = ((int) (screenWidth * 0.8301)) - width;
                     boat_passengers[1].animate().x(new_strt).y(new_top).setDuration(500).start();
+                    boat_passengers[1].setTextDirection(2);
                 }
 
 
@@ -240,6 +336,7 @@ public class MainActivity extends AppCompatActivity {
                     new_top = ((int) (screenHeight * 0.550)) - hight;
                     new_strt = ((int) (screenWidth * 0.7301)) - width;
                     boat_passengers[2].animate().x(new_strt).y(new_top).setDuration(500).start();
+                    boat_passengers[2].setTextDirection(2);
                 }
 
                 if (boat_side.equals("down")) {
@@ -247,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     boat_side = "down";
                 }
-            } else if (boat_side.equals("up")) {
+            } else if (boat_side.equals("up")  && allow_to_cross) {
 
                 int
                         hight = img_boat.getHeight();
@@ -264,6 +361,7 @@ public class MainActivity extends AppCompatActivity {
                     new_top = ((int) (screenHeight * 0.74)) - boat_passengers[1].getHeight();
                     new_strt = ((int) (screenWidth * 0.65)) - width;
                     boat_passengers[1].animate().x(new_strt).y(new_top).setDuration(500).start();
+                    boat_passengers[1].setTextDirection(1);
                 }
                 if (boat_passengers[2] != null) {
                     hight = boat_passengers[2].getHeight();
@@ -271,6 +369,7 @@ public class MainActivity extends AppCompatActivity {
                     new_top = ((int) (screenHeight * 0.74)) - boat_passengers[2].getHeight();
                     new_strt = ((int) (screenWidth * 0.55)) - width;
                     boat_passengers[2].animate().x(new_strt).y(new_top).setDuration(500).start();
+                    boat_passengers[1].setTextDirection(1);
                 }
                 if (boat_side.equals("down")) {
                     boat_side = "up";
