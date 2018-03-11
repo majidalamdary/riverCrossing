@@ -260,7 +260,7 @@
         android:layout_height="match_parent"
         android:id="@+id/lay_cover"
 
-        android:background="#9affffff"
+        android:background="#bbffffff"
         android:visibility="gone"
         android:orientation="horizontal"></LinearLayout>
 
@@ -287,6 +287,29 @@
         android:visibility="gone"
         android:layout_height="wrap_content"
         />
+
+    <ImageView
+        android:id="@+id/img_star1"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        />
+
+    <ImageView
+        android:id="@+id/img_star2"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:onClick="clk_img_star2"
+        />
+    <ImageView
+        android:id="@+id/img_star3"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:onClick="clk_img_star3"
+        />
+
 
     <Button
         android:id="@+id/button"

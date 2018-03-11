@@ -1,6 +1,7 @@
 package com.sputa.rivercrossing;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -19,6 +20,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -54,9 +56,18 @@ public class MainActivity extends AppCompatActivity {
     ImageView[] img_obj = new ImageView[11];
     ImageView img_boat;
     ImageView img_move_button;
-    public int level_id=1;
+    public int level_id=2;
     LinearLayout[] lay_message = new LinearLayout[6];
     TextView[] txt_message = new TextView[6];
+
+
+
+    int
+        move_count = 0;
+    int
+            max_move_count = 0;
+    int
+            max_game_time = 0;
 
 
 
@@ -79,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         img_boat = findViewById(R.id.img_boat);
         RelativeLayout.LayoutParams lp_img_boat = new RelativeLayout.LayoutParams((int) (screenWidth * 0.3), (int) (screenHeight * 0.3));
         lp_img_boat.topMargin = (int) (screenHeight * 0.56);
-        lp_img_boat.setMarginStart(((int) (screenWidth * 0.33)));
+        lp_img_boat.setMarginStart(((int) (screenWidth * 0.3301)));
         img_boat.setLayoutParams(lp_img_boat);
 
         img_move_button = findViewById(R.id.img_move_button);
@@ -197,6 +208,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if(level_id==1)
             level1_set();
+        if(level_id==2)
+            level2_set();
 
 
 
@@ -216,23 +229,40 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                int x = (int) event.getX();
-                int y = (int) event.getY();
+                float x =  event.getX();
+                float y =  event.getY();
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        Toast.makeText(MainActivity.this, String.valueOf(x)+"down", Toast.LENGTH_SHORT).show();
+                        float zx = ((x/screenWidth));
+                        float zy = ((y/screenHeight));
+                       // Toast.makeText(MainActivity.this, String.valueOf(zx)+"down"+String.valueOf(zy), Toast.LENGTH_SHORT).show();
+
+                        if(zx>.04013 && zx<.07013)
+                            if(zy>.1796 && zy<.2370)
+                                clk_next();
+
+                        if(zx>.3751 && zx<.4141)
+                            if(zy>.1796 && zy<.2370)
+                                clk_again();
+
+
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        Toast.makeText(MainActivity.this, String.valueOf(x)+"move", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(MainActivity.this, String.valueOf(x)+"move", Toast.LENGTH_SHORT).show();
                         Log.i("TAG", "moving: (" + x + ", " + y + ")");
                         break;
                     case MotionEvent.ACTION_UP:
-                        Toast.makeText(MainActivity.this, String.valueOf(x)+"up", Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(MainActivity.this, String.valueOf(x)+"up", Toast.LENGTH_SHORT).show();
                         Log.i("TAG", "touched up");
                         break;
                 }
+//04013
+//06013
 
+
+//                01796
+//                        02370
                 return true;
             }
         });
@@ -241,6 +271,44 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private void clk_next()
+    {
+        startActivity(new Intent(this,Menu.class));
+    }
+    private void clk_again()
+    {
+
+//        LinearLayout lay_cover =findViewById(R.id.lay_cover);
+//        lay_cover.setVisibility(View.GONE);
+//        LinearLayout lay_finished =findViewById(R.id.lay_finished);
+//        lay_finished.setVisibility(View.GONE);
+//
+//        ImageView img_finished1 =findViewById(R.id.img_finished1);
+//        img_finished1.setVisibility(View.GONE);
+//        ImageView img_finished2 =findViewById(R.id.img_finished2);
+//        img_finished2.setVisibility(View.GONE);
+//
+//        ImageView img_star1 =findViewById(R.id.img_star1);
+//        img_star1.setVisibility(View.GONE);
+//        ImageView img_star2 =findViewById(R.id.img_star2);
+//        img_star2.setVisibility(View.GONE);
+//        ImageView img_star3 =findViewById(R.id.img_star3);
+//        img_star3.setVisibility(View.GONE);
+//        time=0;
+//        move_count=0;
+//        game_is_running=true;
+//        if(level_id==1)
+//            level1_set();
+
+
+        finish();
+        startActivity(getIntent());
+
+
+
+    }
+
 
     private void show_message(String message)
     {
@@ -322,7 +390,7 @@ public class MainActivity extends AppCompatActivity {
         img_obj[1].setVisibility(View.VISIBLE);
         RelativeLayout.LayoutParams lp_img_farmer = new RelativeLayout.LayoutParams((int) (screenWidth * .08), (int) (screenHeight * 0.25));
         img_objects_top[1] = (int) (screenHeight * 0.6);
-        img_objects_start[1] = (int) (screenWidth * 0.87);
+        img_objects_start[1] = (int) (screenWidth * 0.870);
         lp_img_farmer.topMargin = (img_objects_top[1]);
         lp_img_farmer.setMarginStart(img_objects_start[1]);
         img_obj[1].setLayoutParams(lp_img_farmer);
@@ -373,12 +441,87 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        max_move_count=6;
+        max_game_time=30;
+
 
 
 
 
 
     }
+
+    private void level2_set() {
+        obj_count = 4;
+
+        img_obj[1] = findViewById(R.id.img_obj1);
+        //     img_obj1.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[1].setImageResource(R.drawable.black_knight);
+        img_obj[1].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_farmer  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.10), (int) (screenHeight * 0.16));
+        img_objects_top[1]= (int) (screenHeight * 0.715);
+        img_objects_start[1] = (int) (screenWidth * 0.870);
+        lp_img_farmer.topMargin = (img_objects_top[1]);
+        lp_img_farmer.setMarginStart(img_objects_start[1]);
+        img_obj[1].setLayoutParams(lp_img_farmer);
+        img_obj[1].setContentDescription("black_knight");
+        img_obj[1].setTextDirection(1);
+
+        img_obj[2] = findViewById(R.id.img_obj2);
+//        img_obj2.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[2].setImageResource(R.drawable.red_knight);
+        img_obj[2].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_cabbage  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.10), (int) (screenHeight * 0.16));
+        img_objects_start[2] = (int) (screenWidth * 0.78);
+        img_objects_top[2] = (int) (screenHeight * 0.715);
+        lp_img_cabbage.topMargin = (img_objects_top[2]);
+        lp_img_cabbage.setMarginStart(img_objects_start[2]);
+        img_obj[2].setLayoutParams(lp_img_cabbage);
+        img_obj[2].setContentDescription("red_knight");
+        img_obj[2].setTextDirection(1);
+
+
+        img_obj[3] = findViewById(R.id.img_obj3);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[3].setImageResource(R.drawable.blue_knight);
+        img_obj[3].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_wolf = new RelativeLayout.LayoutParams((int) (screenWidth * 0.10), (int) (screenHeight * 0.16));
+        img_objects_start[3] = (int) (screenWidth * 0.69);
+        img_objects_top[3] = (int) (screenHeight * 0.715);
+        lp_img_wolf.topMargin = (img_objects_top[3]);
+        lp_img_wolf.setMarginStart(img_objects_start[3]);
+        img_obj[3].setLayoutParams(lp_img_wolf);
+        img_obj[3].setContentDescription("blue_knight1");
+        img_obj[3].setTextDirection(1);
+
+
+        img_obj[4] = findViewById(R.id.img_obj4);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[4].setImageResource(R.drawable.blue_knight);
+        img_obj[4].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_sheep  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.10), (int) (screenHeight * 0.16));
+        img_objects_start[4] = (int) (screenWidth * 0.60);
+        img_objects_top[4] = (int) (screenHeight * 0.715);
+        lp_img_sheep.topMargin = (img_objects_top[4]);
+        lp_img_sheep.setMarginStart(img_objects_start[4]);
+        img_obj[4].setLayoutParams(lp_img_sheep);
+        img_obj[4].setContentDescription("blue_knight2");
+        img_obj[4].setTextDirection(1);
+
+
+
+
+        max_move_count=6;
+        max_game_time=30;
+
+
+
+
+
+
+    }
+
+
     public boolean check_level1_cross()
     {
         boolean result=true;
@@ -468,7 +611,82 @@ public class MainActivity extends AppCompatActivity {
 
         return result;
     }
+    public boolean check_level2_cross()
+    {
+        boolean result=true;
 
+
+                //     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+
+
+        if((boat_passengers[1]==img_obj[1] && boat_passengers[2]==null) || (boat_passengers[2]==img_obj[1] && boat_passengers[1]==null))
+        {
+            show_message("شوالیه سیاه نمی تواند تنهایی عبور کند");
+            result=false;
+        }
+        if((boat_passengers[1]==img_obj[2] && boat_passengers[2]!=null) || (boat_passengers[2]==img_obj[2] && boat_passengers[1]!=null))
+        {
+            show_message("شوالیه قرمز باید تنها عبور کند");
+            result=false;
+        }
+
+
+        if(boat_passengers[1]!=null && boat_side.equals("down"))
+        {
+            boat_passengers[1].setTextDirection(2);
+        }
+        if(boat_passengers[2]!=null && boat_side.equals("down"))
+        {
+            boat_passengers[2].setTextDirection(2);
+        }
+        if(boat_passengers[1]!=null && boat_side.equals("up"))
+        {
+            boat_passengers[1].setTextDirection(1);
+        }
+        if(boat_passengers[2]!=null && boat_side.equals("up"))
+        {
+            boat_passengers[2].setTextDirection(1);
+        }
+        boolean
+                cant=false;
+//                Toast.makeText(this,String.valueOf(img_obj[1].getTextDirection()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, String.valueOf(img_obj[2].getTextDirection()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, String.valueOf(img_obj[4].getTextDirection()), Toast.LENGTH_SHORT).show();
+
+        if((img_obj[1].getTextDirection()!=1 && img_obj[2].getTextDirection()==1 && img_obj[4].getTextDirection()==1 && img_obj[3].getTextDirection()==1) || (img_obj[1].getTextDirection()!=2 && img_obj[2].getTextDirection()==2 && img_obj[3].getTextDirection()==2 && img_obj[4].getTextDirection()==2))
+        {
+//                Toast.makeText(this, "گوسفند و کلم نمی توانند تنها باشند", Toast.LENGTH_SHORT).show();
+            cant_cros_message="شوالیه سیاه نمی تواند تنها بماند";
+            show_message(cant_cros_message);
+            cant=true;
+        }
+
+
+        if(cant)
+        {
+            if(boat_passengers[1]!=null && boat_side.equals("down"))
+            {
+                boat_passengers[1].setTextDirection(1);
+            }
+            if(boat_passengers[2]!=null && boat_side.equals("down"))
+            {
+                boat_passengers[2].setTextDirection(1);
+            }
+            if(boat_passengers[1]!=null && boat_side.equals("up"))
+            {
+                boat_passengers[1].setTextDirection(2);
+            }
+            if(boat_passengers[2]!=null && boat_side.equals("up"))
+            {
+                boat_passengers[2].setTextDirection(2);
+            }
+            //     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+            result= false;
+        }
+
+
+        return result;
+    }
 
     public void clk_img(View view) {
     }
@@ -479,6 +697,9 @@ public class MainActivity extends AppCompatActivity {
         boolean result=true;
         if(level_id==1) {
             result =check_level1_cross();
+        }
+        if(level_id==2) {
+            result =check_level2_cross();
         }
         return  result;
     }
@@ -516,6 +737,7 @@ public class MainActivity extends AppCompatActivity {
                 int new_top = ((int) (screenHeight * 0.37));
                 int new_strt = ((int) (screenWidth * 0.55));
                 img_boat.animate().x(new_strt).y(new_top).setDuration(500).start();
+                move_count++;
 
                 if (boat_passengers[1] != null) {
                     hight = boat_passengers[1].getHeight();
@@ -551,6 +773,7 @@ public class MainActivity extends AppCompatActivity {
                 int new_top = ((int) (screenHeight * 0.55));
                 int new_strt = ((int) (screenWidth * 0.371));
                 img_boat.animate().x(new_strt).y(new_top).setDuration(500).start();
+                move_count++;
 
                 if (boat_passengers[1] != null) {
                     hight = boat_passengers[1].getHeight();
@@ -585,11 +808,16 @@ public class MainActivity extends AppCompatActivity {
             result = check_level1_finished();
 
         }
-       // result=true;
+        if(level_id==2)
+        {
+            result = check_level1_finished();
+
+        }
+     //   result=true;
         if(result) {
           //  Toast.makeText(this, "Its finished", Toast.LENGTH_SHORT).show();
             LinearLayout lay_finished = findViewById(R.id.lay_finished);
-            RelativeLayout.LayoutParams lp_lay_finished = new RelativeLayout.LayoutParams((int)(screenHeight*.75),(int)(screenWidth*.47));
+            RelativeLayout.LayoutParams lp_lay_finished = new RelativeLayout.LayoutParams((int)(screenWidth*.45),(int)(screenHeight*.7));
             lp_lay_finished.topMargin = (int)(screenHeight*.1);
             //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
             lp_lay_finished.setMarginStart((int)(screenWidth*.25));
@@ -608,17 +836,67 @@ public class MainActivity extends AppCompatActivity {
                 RelativeLayout.LayoutParams lp_img_finished1 = new RelativeLayout.LayoutParams((int)(screenHeight*.25),(int)(screenWidth*.15));
                 lp_img_finished1.topMargin = (int)(screenHeight*.49);
                 //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
-                lp_img_finished1.setMarginStart((int)(screenWidth*.32));
+                lp_img_finished1.setMarginStart((int)(screenWidth*.375));
                 img_finished1.setLayoutParams(lp_img_finished1);
 
-                img_finished2.setImageResource(R.drawable.cabbage);
+                img_finished2.setImageResource(R.drawable.sheep);
                 RelativeLayout.LayoutParams lp_img_finished2 = new RelativeLayout.LayoutParams((int)(screenHeight*.13),(int)(screenWidth*.15));
                 lp_img_finished2.topMargin = (int)(screenHeight*.535);
                 //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
-                lp_img_finished2.setMarginStart((int)(screenWidth*.46));
+                lp_img_finished2.setMarginStart((int)(screenWidth*.49));
                 img_finished2.setLayoutParams(lp_img_finished2);
 
             }
+            ImageView img_star1=findViewById(R.id.img_star1);
+            img_star1.setVisibility(View.VISIBLE);
+            img_star1.setImageResource(R.drawable.star);
+            RelativeLayout.LayoutParams lp_img_star1 = new RelativeLayout.LayoutParams((int)(screenWidth*.07),(int)(screenHeight*.07));
+            lp_img_star1.topMargin = (int)(screenHeight*.276);
+            //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
+            lp_img_star1.setMarginStart((int)(screenWidth*.513));
+            img_star1.setLayoutParams(lp_img_star1);
+            ScaleAnimation scal=new ScaleAnimation(0, 1f, 0, 1f, Animation.RELATIVE_TO_SELF, (float)0.5,Animation.RELATIVE_TO_SELF, (float)0.5);
+            scal.setDuration(1000);
+        //    scal.setFillAfter(true);
+
+            img_star1.setAnimation(scal);
+
+            ImageView img_star2=findViewById(R.id.img_star2);
+            img_star2.setVisibility(View.VISIBLE);
+            if(move_count>max_move_count)
+                img_star2.setImageResource(R.drawable.question);
+            else
+                img_star2.setImageResource(R.drawable.star);
+            RelativeLayout.LayoutParams lp_img_star2 = new RelativeLayout.LayoutParams((int)(screenWidth*.07),(int)(screenHeight*.07));
+            lp_img_star2.topMargin = (int)(screenHeight*.279);
+            //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
+            lp_img_star2.setMarginStart((int)(screenWidth*.45));
+            img_star2.setLayoutParams(lp_img_star2);
+            scal=new ScaleAnimation(0, 1f, 0, 1f, Animation.RELATIVE_TO_SELF, (float)0.5,Animation.RELATIVE_TO_SELF, (float)0.5);
+            scal.setDuration(1000);
+            scal.setStartOffset(1000);
+           // scal.setFillAfter(true);
+
+            img_star2.setAnimation(scal);
+
+            ImageView img_star3=findViewById(R.id.img_star3);
+            img_star3.setVisibility(View.VISIBLE);
+            if(time>max_game_time)
+                img_star3.setImageResource(R.drawable.question);
+            else
+                img_star3.setImageResource(R.drawable.star);
+            RelativeLayout.LayoutParams lp_img_star3 = new RelativeLayout.LayoutParams((int)(screenWidth*.07),(int)(screenHeight*.07));
+            lp_img_star3.topMargin = (int)(screenHeight*.279);
+            //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
+            lp_img_star3.setMarginStart((int)(screenWidth*.384));
+            img_star3.setLayoutParams(lp_img_star3);
+            scal=new ScaleAnimation(0, 1f, 0, 1f, Animation.RELATIVE_TO_SELF, (float)0.5,Animation.RELATIVE_TO_SELF, (float)0.5);
+            scal.setDuration(1000);
+            scal.setStartOffset(2000);
+           // scal.setFillAfter(true);
+
+            img_star3.setAnimation(scal);
+
 
 
 
@@ -798,6 +1076,18 @@ public class MainActivity extends AppCompatActivity {
         check_is_finished();
     }
 
+    public void clk_img_star2(View view) {
+        if(move_count>max_move_count)
+        {
+            Toast.makeText(this, "بیشتر از "+String.valueOf(max_move_count)+" حرکت انجام داده اید ", Toast.LENGTH_SHORT).show();
+        }
+    }
+    public void clk_img_star3(View view) {
+        if(time>max_game_time)
+        {
+            Toast.makeText(this, " بازی شما بیشتر از"+String.valueOf(max_game_time)+"ثانیه طول کشیده است ", Toast.LENGTH_SHORT).show();
+        }
+    }
     public class Timer1 extends Thread {
 
         int oneSecond=1000;
