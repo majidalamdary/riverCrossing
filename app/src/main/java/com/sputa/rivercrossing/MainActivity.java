@@ -8,7 +8,9 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -57,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
     TextView[] txt_message = new TextView[6];
 
 
+
+    boolean
+        game_is_running=false;
     public TextView txt_timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,13 +200,46 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        is_time_start=true;
         tim = new Timer1("time");
         tim.start();
+        game_is_running = true;
         for(int i=1;i<=5;i++)
         {
             top[i]=0;
         }
+
+
+
+        LinearLayout lay_finised =findViewById(R.id.lay_finished);
+        lay_finised.setOnTouchListener(new View.OnTouchListener()    {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        Toast.makeText(MainActivity.this, String.valueOf(x)+"down", Toast.LENGTH_SHORT).show();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Toast.makeText(MainActivity.this, String.valueOf(x)+"move", Toast.LENGTH_SHORT).show();
+                        Log.i("TAG", "moving: (" + x + ", " + y + ")");
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Toast.makeText(MainActivity.this, String.valueOf(x)+"up", Toast.LENGTH_SHORT).show();
+                        Log.i("TAG", "touched up");
+                        break;
+                }
+
+                return true;
+            }
+        });
+
+
+
+
     }
 
     private void show_message(String message)
@@ -463,7 +501,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        if (boat_passengers[1] != null || boat_passengers[2] != null) {
+        if ((boat_passengers[1] != null || boat_passengers[2] != null )&& game_is_running) {
 
             boolean
                 allow_to_cross = false;
@@ -547,9 +585,46 @@ public class MainActivity extends AppCompatActivity {
             result = check_level1_finished();
 
         }
+       // result=true;
+        if(result) {
+          //  Toast.makeText(this, "Its finished", Toast.LENGTH_SHORT).show();
+            LinearLayout lay_finished = findViewById(R.id.lay_finished);
+            RelativeLayout.LayoutParams lp_lay_finished = new RelativeLayout.LayoutParams((int)(screenHeight*.75),(int)(screenWidth*.47));
+            lp_lay_finished.topMargin = (int)(screenHeight*.1);
+            //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
+            lp_lay_finished.setMarginStart((int)(screenWidth*.25));
+            lay_finished.setLayoutParams(lp_lay_finished);
+            LinearLayout lay_cover = findViewById(R.id.lay_cover);
+            lay_cover.setVisibility(View.VISIBLE);
+            lay_finished.setVisibility(View.VISIBLE);
+            ImageView img_finished1=findViewById(R.id.img_finished1);
+            img_finished1.setVisibility(View.VISIBLE);
+            ImageView img_finished2=findViewById(R.id.img_finished2);
+            img_finished2.setVisibility(View.VISIBLE);
 
-        if(result)
-            Toast.makeText(this, "Its finished", Toast.LENGTH_SHORT).show();
+            if(level_id==1)
+            {
+                img_finished1.setImageResource(R.drawable.farmer);
+                RelativeLayout.LayoutParams lp_img_finished1 = new RelativeLayout.LayoutParams((int)(screenHeight*.25),(int)(screenWidth*.15));
+                lp_img_finished1.topMargin = (int)(screenHeight*.49);
+                //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
+                lp_img_finished1.setMarginStart((int)(screenWidth*.32));
+                img_finished1.setLayoutParams(lp_img_finished1);
+
+                img_finished2.setImageResource(R.drawable.cabbage);
+                RelativeLayout.LayoutParams lp_img_finished2 = new RelativeLayout.LayoutParams((int)(screenHeight*.13),(int)(screenWidth*.15));
+                lp_img_finished2.topMargin = (int)(screenHeight*.535);
+                //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
+                lp_img_finished2.setMarginStart((int)(screenWidth*.46));
+                img_finished2.setLayoutParams(lp_img_finished2);
+
+            }
+
+
+
+
+            game_is_running=false;
+        }
 
     }
     private boolean check_level1_finished()
@@ -571,54 +646,33 @@ public class MainActivity extends AppCompatActivity {
                 is_passenger = 0;
         int
                 img_obj_id = 0;
-        for (int i = 1; i <= 2; i++) {
-            if ((boat_passengers[i] != null)) {
-                if ((boat_passengers[i]).equals(img_my_obj)) {
-                    is_passenger = i;
-                }
-            }
-        }
-        for (int i = 1; i <= 10; i++) {
-            if (img_obj[i] != null)
-                if (img_obj[i].equals(img_my_obj))
-                    img_obj_id = i;
-        }
-        int
-                flag = 0;
-        boat_passenger_count = 0;
-        if (is_passenger == 0) {
-            if (boat_passengers[1] == null) {
-                if ((boat_side.equals("down") && img_location[img_obj_id] == 1) || (boat_side.equals("up") && img_location[img_obj_id] == 2)) {
-                    RelativeLayout.LayoutParams lp_img_my_obj;
-                    lp_img_my_obj = (RelativeLayout.LayoutParams) img_my_obj.getLayoutParams();
-                    if (boat_side.equals("down")) {
-                        lp_img_my_obj.topMargin = ((int) (screenHeight * 0.74)) - img_my_obj.getHeight(); //(get_top_obj_1(String.valueOf(img_my_obj.getContentDescription())));
-                        lp_img_my_obj.setMarginStart((int) (screenWidth * 0.35));
-                    } else if (boat_side.equals("up")) {
-                        lp_img_my_obj.topMargin = ((int) (screenHeight * 0.74)) - img_my_obj.getHeight(); //(get_top_obj_1(String.valueOf(img_my_obj.getContentDescription())));
-                        lp_img_my_obj.setMarginStart((int) (screenWidth * 0.35));
-                        for (int j = 1; j <= 6; j++) {
-                            if (img_in_top[j] != null)
-                                if (img_in_top[j].equals(img_my_obj))
-                                    img_in_top[j] = null;
-                        }
+        if (game_is_running) {
+            for (int i = 1; i <= 2; i++) {
+                if ((boat_passengers[i] != null)) {
+                    if ((boat_passengers[i]).equals(img_my_obj)) {
+                        is_passenger = i;
                     }
-                    img_my_obj.setLayoutParams(lp_img_my_obj);
-                    boat_passengers[1] = img_my_obj;
-                    flag = 1;
                 }
             }
-            if (boat_passengers[2] == null && flag == 0) {
-                if ((boat_side.equals("down") && img_location[img_obj_id] == 1) || (boat_side.equals("up") && img_location[img_obj_id] == 2)) {
-                    {
+            for (int i = 1; i <= 10; i++) {
+                if (img_obj[i] != null)
+                    if (img_obj[i].equals(img_my_obj))
+                        img_obj_id = i;
+            }
+            int
+                    flag = 0;
+            boat_passenger_count = 0;
+            if (is_passenger == 0) {
+                if (boat_passengers[1] == null) {
+                    if ((boat_side.equals("down") && img_location[img_obj_id] == 1) || (boat_side.equals("up") && img_location[img_obj_id] == 2)) {
                         RelativeLayout.LayoutParams lp_img_my_obj;
                         lp_img_my_obj = (RelativeLayout.LayoutParams) img_my_obj.getLayoutParams();
                         if (boat_side.equals("down")) {
                             lp_img_my_obj.topMargin = ((int) (screenHeight * 0.74)) - img_my_obj.getHeight(); //(get_top_obj_1(String.valueOf(img_my_obj.getContentDescription())));
-                            lp_img_my_obj.setMarginStart((int) (screenWidth * 0.45));
+                            lp_img_my_obj.setMarginStart((int) (screenWidth * 0.35));
                         } else if (boat_side.equals("up")) {
                             lp_img_my_obj.topMargin = ((int) (screenHeight * 0.74)) - img_my_obj.getHeight(); //(get_top_obj_1(String.valueOf(img_my_obj.getContentDescription())));
-                            lp_img_my_obj.setMarginStart((int) (screenWidth * 0.45));
+                            lp_img_my_obj.setMarginStart((int) (screenWidth * 0.35));
                             for (int j = 1; j <= 6; j++) {
                                 if (img_in_top[j] != null)
                                     if (img_in_top[j].equals(img_my_obj))
@@ -626,48 +680,71 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                         img_my_obj.setLayoutParams(lp_img_my_obj);
-                        boat_passengers[2] = img_my_obj;
+                        boat_passengers[1] = img_my_obj;
                         flag = 1;
                     }
                 }
-            }
-            if (flag == 0) {
-                if ((boat_side.equals("down") && img_location[img_obj_id] == 1) || (boat_side.equals("up") && img_location[img_obj_id] == 2))
+                if (boat_passengers[2] == null && flag == 0) {
+                    if ((boat_side.equals("down") && img_location[img_obj_id] == 1) || (boat_side.equals("up") && img_location[img_obj_id] == 2)) {
+                        {
+                            RelativeLayout.LayoutParams lp_img_my_obj;
+                            lp_img_my_obj = (RelativeLayout.LayoutParams) img_my_obj.getLayoutParams();
+                            if (boat_side.equals("down")) {
+                                lp_img_my_obj.topMargin = ((int) (screenHeight * 0.74)) - img_my_obj.getHeight(); //(get_top_obj_1(String.valueOf(img_my_obj.getContentDescription())));
+                                lp_img_my_obj.setMarginStart((int) (screenWidth * 0.45));
+                            } else if (boat_side.equals("up")) {
+                                lp_img_my_obj.topMargin = ((int) (screenHeight * 0.74)) - img_my_obj.getHeight(); //(get_top_obj_1(String.valueOf(img_my_obj.getContentDescription())));
+                                lp_img_my_obj.setMarginStart((int) (screenWidth * 0.45));
+                                for (int j = 1; j <= 6; j++) {
+                                    if (img_in_top[j] != null)
+                                        if (img_in_top[j].equals(img_my_obj))
+                                            img_in_top[j] = null;
+                                }
+                            }
+                            img_my_obj.setLayoutParams(lp_img_my_obj);
+                            boat_passengers[2] = img_my_obj;
+                            flag = 1;
+                        }
+                    }
+                }
+                if (flag == 0) {
+                    if ((boat_side.equals("down") && img_location[img_obj_id] == 1) || (boat_side.equals("up") && img_location[img_obj_id] == 2))
 
-                show_message("ظرفیت خالی نیست");
-            }
-        } else {
-            boat_passengers[is_passenger] = null;
-            for (int i = 1; i <= obj_count; i++) {
-                if (img_obj[i].getContentDescription().toString().equals(img_my_obj.getContentDescription().toString())) {
-                    if (boat_side.equals("down")) {
-                        RelativeLayout.LayoutParams lp_img_my_obj;
+                        show_message("ظرفیت خالی نیست");
+                }
+            } else {
+                boat_passengers[is_passenger] = null;
+                for (int i = 1; i <= obj_count; i++) {
+                    if (img_obj[i].getContentDescription().toString().equals(img_my_obj.getContentDescription().toString())) {
+                        if (boat_side.equals("down")) {
+                            RelativeLayout.LayoutParams lp_img_my_obj;
 
-                        lp_img_my_obj = (RelativeLayout.LayoutParams) img_my_obj.getLayoutParams();
+                            lp_img_my_obj = (RelativeLayout.LayoutParams) img_my_obj.getLayoutParams();
 
-                        lp_img_my_obj.topMargin = img_objects_top[i];
-                        lp_img_my_obj.setMarginStart(img_objects_start[i]);
-                        img_my_obj.setLayoutParams(lp_img_my_obj);
-                        img_location[i] = 1;
-                    } else {
-                        for (int j = 1; j <= 6; j++) {
-                            if (img_in_top[j] == null) {
-                                RelativeLayout.LayoutParams lp_img_my_obj;
-                                lp_img_my_obj = (RelativeLayout.LayoutParams) img_my_obj.getLayoutParams();
-                                lp_img_my_obj.topMargin = ((int) (screenHeight * 0.60)) - img_my_obj.getHeight();
-                                lp_img_my_obj.setMarginStart(((int) (screenWidth * 0.09)) + ((int) (screenWidth * 0.1)) * j);
-                                img_my_obj.setLayoutParams(lp_img_my_obj);
-                                img_in_top[j] = img_my_obj;
-                                img_location[i] = 2;
-                                break;
+                            lp_img_my_obj.topMargin = img_objects_top[i];
+                            lp_img_my_obj.setMarginStart(img_objects_start[i]);
+                            img_my_obj.setLayoutParams(lp_img_my_obj);
+                            img_location[i] = 1;
+                        } else {
+                            for (int j = 1; j <= 6; j++) {
+                                if (img_in_top[j] == null) {
+                                    RelativeLayout.LayoutParams lp_img_my_obj;
+                                    lp_img_my_obj = (RelativeLayout.LayoutParams) img_my_obj.getLayoutParams();
+                                    lp_img_my_obj.topMargin = ((int) (screenHeight * 0.60)) - img_my_obj.getHeight();
+                                    lp_img_my_obj.setMarginStart(((int) (screenWidth * 0.09)) + ((int) (screenWidth * 0.1)) * j);
+                                    img_my_obj.setLayoutParams(lp_img_my_obj);
+                                    img_in_top[j] = img_my_obj;
+                                    img_location[i] = 2;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        check_is_finished();
+            check_is_finished();
 
+        }
     }
     int[]
             top= new int[6];
@@ -717,6 +794,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void clk10(View view) {
+        check_is_finished();
+    }
+
     public class Timer1 extends Thread {
 
         int oneSecond=1000;
@@ -742,7 +823,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                            if(is_time_start) {
+                            if(game_is_running) {
                                 time++;
 
 

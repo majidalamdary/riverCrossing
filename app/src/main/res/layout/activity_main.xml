@@ -10,6 +10,7 @@
 
 
 
+
     <TextView
         android:id="@+id/txt_timer"
         android:layout_width="wrap_content"
@@ -254,14 +255,46 @@
         android:visibility="gone"
         android:clickable="true"
         android:onClick="clk_obj"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/lay_cover"
 
+        android:background="#9affffff"
+        android:visibility="gone"
+        android:orientation="horizontal"></LinearLayout>
 
     <LinearLayout
+        android:id="@+id/lay_finished"
         android:layout_width="300dp"
         android:layout_height="300dp"
+        android:visibility="gone"
         android:background="@drawable/level_completed"
         android:orientation="vertical">
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/img_finished1"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        />
+
+    <ImageView
+        android:id="@+id/img_finished2"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/img_move_button"
+        android:onClick="clk10"
+        android:text="Button" />
 
 </RelativeLayout>
