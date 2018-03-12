@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -56,11 +57,13 @@ public class MainActivity extends AppCompatActivity {
     ImageView[] img_obj = new ImageView[11];
     ImageView img_boat;
     ImageView img_move_button;
-    public int level_id=2;
+    public int level_id=3;
     LinearLayout[] lay_message = new LinearLayout[6];
     TextView[] txt_message = new TextView[6];
 
 
+    String[] level_rules = new String[21];
+    String[] level_helps = new String[21];
 
     int
         move_count = 0;
@@ -80,8 +83,10 @@ public class MainActivity extends AppCompatActivity {
 
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         setContentView(R.layout.activity_main);
+        set_level_rule_and_help();
+
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
         wm.getDefaultDisplay().getMetrics(displayMetrics);
@@ -210,12 +215,16 @@ public class MainActivity extends AppCompatActivity {
             level1_set();
         if(level_id==2)
             level2_set();
+        if(level_id==3)
+            level3_set();
 
 
 
         tim = new Timer1("time");
         tim.start();
-        game_is_running = true;
+        //game_is_running = true;
+        LinearLayout lay_rules =findViewById(R.id.lay_rules);
+        clk_rules(lay_rules);
         for(int i=1;i<=5;i++)
         {
             top[i]=0;
@@ -272,6 +281,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    private void set_level_rule_and_help()
+    {
+        ///////////////////////////////////////level1
+        level_rules[1]="";
+        level_rules[1]+="کشاورز می خواهد از رودخانه عبور کند او می خواهد گرگ، گوسفند و کلم را با خود ببرد"+'\n';
+        level_rules[1]+="قوانین : "+'\n'+'\n';
+        level_rules[1]+="1- کشاورز تنها کسی هست که می تواند قایق را براند. او فقط می تواند یک مسافر دیگر سوار کند"+'\n';
+        level_rules[1]+="2- اگر گرگ و گوسفند باهم تنها شوند گرگ گوسفند را خواهد خورد."+'\n';
+        level_rules[1]+="3- اگر گوسفند و کلم باهم تنها باشند گوسفند کلم را خواهد خورد."+'\n'+'\n';
+        level_rules[1]+="چطور کشاورز گرگ، گوسفند و کلم را به سمت دیگر رودخانه ببرد بدون اینکه یکی از آنها خورده شود؟"+'\n'+'\n';
+        level_helps[1]="";
+        level_helps[1]+="1- کشاورز با گوسفند عبور می کند."+'\n';
+        level_helps[1]+="2- کشاورز برمیگردد."+'\n';
+        level_helps[1]+="3- کشاورز با گرگ عبور می کند"+'\n';
+        level_helps[1]+="4- کشاورز با گوسفند برمیگردد."+'\n';
+        level_helps[1]+="5- کشاورز با کلم عبور می کند."+'\n';
+        level_helps[1]+="6- کشاورز برمیگردد."+'\n';
+        level_helps[1]+="7- کشاورز با گوسفند عبور می کند."+'\n';
+        level_helps[1]+="تمام"+'\n';
+
+        ///////////////////////////////////////level1
+        level_rules[2]="";
+        level_rules[2]+="4 شوالیه می خواهند از رودخانه عبور کنند. یکی عصبانی(قرمز)، یکی تنبل(سیاه) و 2تای دیگر شجاع(آبی) هستند"+'\n';
+        level_rules[2]+="قوانین : "+'\n'+'\n';
+        level_rules[2]+="1- حداکثر ظرفیت قایق 2 شوالیه است."+'\n';
+        level_rules[2]+="2- شوالیه تنبل نمی تواند به تنهایی عبور کند و در دو سمت رودخانه نمی تواند تنها بماند."+'\n';
+        level_rules[2]+="3- شوالیه عصبانی با دیگر شوالیه ها سوار قایق نمی شود"+'\n'+'\n';
+        level_rules[2]+="شوالیه ها چطور می توانند از رودخانه عبور کنند."+'\n'+'\n';
+
+        level_helps[2]="";
+        level_helps[2]+="1- شوالیه های شجاع عبور می کنند."+'\n';
+        level_helps[2]+="2- یکی از آنها برمیگردد."+'\n';
+        level_helps[2]+="3- شوالیه عصبانی عبور می کند"+'\n';
+        level_helps[2]+="4- شوالیه شجاع برمیگردد."+'\n';
+        level_helps[2]+="5- شوالیه شجاع با شوالیه تنبل عبور می کند."+'\n';
+        level_helps[2]+="6- شوالیه شجاع برمیگردد."+'\n';
+        level_helps[2]+="7- شوالیه های شجاع عبور می کنند."+'\n';
+        level_helps[2]+="تمام"+'\n';
+
+
+    }
     private void clk_next()
     {
         startActivity(new Intent(this,Menu.class));
@@ -520,6 +571,75 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    private void level3_set() {
+        obj_count = 4;
+
+        img_obj[1] = findViewById(R.id.img_obj1);
+        //     img_obj1.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[1].setImageResource(R.drawable.worker);
+        img_obj[1].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_farmer  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.17), (int) (screenHeight * 0.22));
+        img_objects_top[1]= (int) (screenHeight * 0.7);
+        img_objects_start[1] = (int) (screenWidth * 0.870);
+        lp_img_farmer.topMargin = (img_objects_top[1]);
+        lp_img_farmer.setMarginStart(img_objects_start[1]);
+        img_obj[1].setLayoutParams(lp_img_farmer);
+        img_obj[1].setContentDescription("worker1");
+        img_obj[1].setTextDirection(1);
+
+        img_obj[2] = findViewById(R.id.img_obj2);
+//        img_obj2.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[2].setImageResource(R.drawable.worker);
+        img_obj[2].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_cabbage  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.17), (int) (screenHeight * 0.22));
+        img_objects_start[2] = (int) (screenWidth * 0.78);
+        img_objects_top[2] = (int) (screenHeight * 0.7);
+        lp_img_cabbage.topMargin = (img_objects_top[2]);
+        lp_img_cabbage.setMarginStart(img_objects_start[2]);
+        img_obj[2].setLayoutParams(lp_img_cabbage);
+        img_obj[2].setContentDescription("worker2");
+        img_obj[2].setTextDirection(1);
+
+
+        img_obj[3] = findViewById(R.id.img_obj3);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[3].setImageResource(R.drawable.baby);
+        img_obj[3].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_wolf = new RelativeLayout.LayoutParams((int) (screenWidth * 0.17), (int) (screenHeight * 0.22));
+        img_objects_start[3] = (int) (screenWidth * 0.69);
+        img_objects_top[3] = (int) (screenHeight * 0.7);
+        lp_img_wolf.topMargin = (img_objects_top[3]);
+        lp_img_wolf.setMarginStart(img_objects_start[3]);
+        img_obj[3].setLayoutParams(lp_img_wolf);
+        img_obj[3].setContentDescription("baby1");
+        img_obj[3].setTextDirection(1);
+
+
+        img_obj[4] = findViewById(R.id.img_obj4);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[4].setImageResource(R.drawable.baby);
+        img_obj[4].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_sheep  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.17), (int) (screenHeight * 0.22));
+        img_objects_start[4] = (int) (screenWidth * 0.62);
+        img_objects_top[4] = (int) (screenHeight * 0.7);
+        lp_img_sheep.topMargin = (img_objects_top[4]);
+        lp_img_sheep.setMarginStart(img_objects_start[4]);
+        img_obj[4].setLayoutParams(lp_img_sheep);
+        img_obj[4].setContentDescription("baby2");
+        img_obj[4].setTextDirection(1);
+
+
+
+
+        max_move_count=6;
+        max_game_time=30;
+
+
+
+
+
+
+    }
 
 
     public boolean check_level1_cross()
@@ -653,7 +773,7 @@ public class MainActivity extends AppCompatActivity {
 //                Toast.makeText(this, String.valueOf(img_obj[2].getTextDirection()), Toast.LENGTH_SHORT).show();
 //                Toast.makeText(this, String.valueOf(img_obj[4].getTextDirection()), Toast.LENGTH_SHORT).show();
 
-        if((img_obj[1].getTextDirection()!=1 && img_obj[2].getTextDirection()==1 && img_obj[4].getTextDirection()==1 && img_obj[3].getTextDirection()==1) || (img_obj[1].getTextDirection()!=2 && img_obj[2].getTextDirection()==2 && img_obj[3].getTextDirection()==2 && img_obj[4].getTextDirection()==2))
+        if((img_obj[1].getTextDirection()==1 && img_obj[2].getTextDirection()!=1 && img_obj[4].getTextDirection()!=1 && img_obj[3].getTextDirection()!=1) || (img_obj[1].getTextDirection()==2 && img_obj[2].getTextDirection()!=2 && img_obj[3].getTextDirection()!=2 && img_obj[4].getTextDirection()!=2))
         {
 //                Toast.makeText(this, "گوسفند و کلم نمی توانند تنها باشند", Toast.LENGTH_SHORT).show();
             cant_cros_message="شوالیه سیاه نمی تواند تنها بماند";
@@ -809,6 +929,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if(level_id==2)
+        {
+            result = check_level1_finished();
+
+        }
+        if(level_id==3)
         {
             result = check_level1_finished();
 
@@ -1088,6 +1213,141 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, " بازی شما بیشتر از"+String.valueOf(max_game_time)+"ثانیه طول کشیده است ", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void clk_rules(View view) {
+
+        LinearLayout lay_rules = findViewById(R.id.lay_rules);
+        lay_rules.setBackground(getResources().getDrawable(R.drawable.rules_panel));
+        lay_rules.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_lay_rules = new RelativeLayout.LayoutParams((int)(screenWidth*.63),(int)(screenHeight*.8));
+        lp_lay_rules.topMargin = (int)(screenHeight*.05);
+        //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
+        lp_lay_rules.setMarginStart((int)(screenWidth*.16));
+        lay_rules.setLayoutParams(lp_lay_rules);
+        LinearLayout lay_cover = findViewById(R.id.lay_cover);
+        lay_cover.setVisibility(View.VISIBLE);
+        TextView txt_rules = findViewById(R.id.txt_rules_body);
+
+        txt_rules.setText(level_rules[level_id]);
+        txt_rules.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.026));
+
+        txt_rules.setTypeface(tf);
+
+        lay_rules.setOnTouchListener(new View.OnTouchListener()    {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                float x =  event.getX();
+                float y =  event.getY();
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        float zx = ((x/screenWidth));
+                        float zy = ((y/screenHeight));
+                       //  Toast.makeText(MainActivity.this, String.valueOf(zx)+"down"+String.valueOf(zy), Toast.LENGTH_SHORT).show();
+
+                        if(zx>.5674 && zx<6178)
+                            if(zy>.04314 && zy<.1703) {
+                               // Toast.makeText(MainActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                                LinearLayout lay_rules = findViewById(R.id.lay_rules);
+                                lay_rules.setVisibility(View.GONE);
+                                LinearLayout lay_cover = findViewById(R.id.lay_cover);
+                                lay_cover.setVisibility(View.GONE);
+                                if(!game_is_running)
+                                    game_is_running=true;
+                            }
+
+
+
+
+                        break;
+
+                }
+//04013
+//06013
+
+
+//                01796
+//                        02370
+                return true;
+            }
+        });
+
+    }
+    @Override
+    public void onBackPressed() {
+        //Toast.makeText(this, "11", Toast.LENGTH_SHORT).show();
+        return;
+    }
+
+    public void clk_help(View view) {
+
+        LinearLayout lay_rules = findViewById(R.id.lay_rules);
+        lay_rules.setBackground(getResources().getDrawable(R.drawable.help_panel));
+        lay_rules.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_lay_rules = new RelativeLayout.LayoutParams((int)(screenWidth*.63),(int)(screenHeight*.8));
+        lp_lay_rules.topMargin = (int)(screenHeight*.05);
+        //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
+        lp_lay_rules.setMarginStart((int)(screenWidth*.16));
+        lay_rules.setLayoutParams(lp_lay_rules);
+        LinearLayout lay_cover = findViewById(R.id.lay_cover);
+        lay_cover.setVisibility(View.VISIBLE);
+        TextView txt_rules = findViewById(R.id.txt_rules_body);
+
+        txt_rules.setText(level_helps[level_id]);
+        txt_rules.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.026));
+
+        txt_rules.setTypeface(tf);
+
+        lay_rules.setOnTouchListener(new View.OnTouchListener()    {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                float x =  event.getX();
+                float y =  event.getY();
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        float zx = ((x/screenWidth));
+                        float zy = ((y/screenHeight));
+                        //  Toast.makeText(MainActivity.this, String.valueOf(zx)+"down"+String.valueOf(zy), Toast.LENGTH_SHORT).show();
+
+                        if(zx>.5674 && zx<6178)
+                            if(zy>.04314 && zy<.1703) {
+                                // Toast.makeText(MainActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                                LinearLayout lay_rules = findViewById(R.id.lay_rules);
+                                lay_rules.setVisibility(View.GONE);
+                                LinearLayout lay_cover = findViewById(R.id.lay_cover);
+                                lay_cover.setVisibility(View.GONE);
+                                if(!game_is_running)
+                                    game_is_running=true;
+                            }
+
+
+
+
+                        break;
+
+                }
+//04013
+//06013
+
+
+//                01796
+//                        02370
+                return true;
+            }
+        });
+
+    }
+
+
+    public void clk_again1(View view) {
+
+        finish();
+        startActivity(getIntent());
+    }
+
     public class Timer1 extends Thread {
 
         int oneSecond=1000;
