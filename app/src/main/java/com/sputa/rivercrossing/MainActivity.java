@@ -57,7 +57,15 @@ public class MainActivity extends AppCompatActivity {
     ImageView[] img_obj = new ImageView[11];
     ImageView img_boat;
     ImageView img_move_button;
-    public int level_id=3;
+
+
+
+
+    public int level_id=5;
+
+
+
+
     LinearLayout[] lay_message = new LinearLayout[6];
     TextView[] txt_message = new TextView[6];
 
@@ -217,6 +225,10 @@ public class MainActivity extends AppCompatActivity {
             level2_set();
         if(level_id==3)
             level3_set();
+        if(level_id==4)
+            level4_set();
+        if(level_id==5)
+            level5_set();
 
 
 
@@ -302,14 +314,14 @@ public class MainActivity extends AppCompatActivity {
         level_helps[1]+="7- کشاورز با گوسفند عبور می کند."+'\n';
         level_helps[1]+="تمام"+'\n';
 
-        ///////////////////////////////////////level1
+        ///////////////////////////////////////level2
         level_rules[2]="";
         level_rules[2]+="4 شوالیه می خواهند از رودخانه عبور کنند. یکی عصبانی(قرمز)، یکی تنبل(سیاه) و 2تای دیگر شجاع(آبی) هستند"+'\n';
         level_rules[2]+="قوانین : "+'\n'+'\n';
         level_rules[2]+="1- حداکثر ظرفیت قایق 2 شوالیه است."+'\n';
         level_rules[2]+="2- شوالیه تنبل نمی تواند به تنهایی عبور کند و در دو سمت رودخانه نمی تواند تنها بماند."+'\n';
-        level_rules[2]+="3- شوالیه عصبانی با دیگر شوالیه ها سوار قایق نمی شود"+'\n'+'\n';
-        level_rules[2]+="شوالیه ها چطور می توانند از رودخانه عبور کنند."+'\n'+'\n';
+        level_rules[2]+="3- شوالیه عصبانی با دیگر شوالیه ها سوار قایق نمی شود"+'\n';
+        level_rules[2]+="شوالیه ها چطور می توانند از رودخانه عبور کنند."+'\n';
 
         level_helps[2]="";
         level_helps[2]+="1- شوالیه های شجاع عبور می کنند."+'\n';
@@ -320,6 +332,68 @@ public class MainActivity extends AppCompatActivity {
         level_helps[2]+="6- شوالیه شجاع برمیگردد."+'\n';
         level_helps[2]+="7- شوالیه های شجاع عبور می کنند."+'\n';
         level_helps[2]+="تمام"+'\n';
+
+        ///////////////////////////////////////level3
+        level_rules[3]="";
+        level_rules[3]+="2 کارگر و 2 بچه می خواهند از رودخانه عبور کنند."+'\n';
+        level_rules[3]+="قوانین : "+'\n'+'\n';
+        level_rules[3]+="1- قایق ظرفیت حداکثر یک کارگر یا ۲ بچه را دارد."+'\n';
+        level_rules[3]+="2- هرکس می تواند قایق را براند."+'\n';
+        level_rules[3]+="آنها چگونه می توانند از رودخانه عبور کنند؟"+'\n'+'\n';
+
+
+        level_helps[3]="";
+        level_helps[3]+="1- بچه ها از رودخانه عبور می کنند."+'\n';
+        level_helps[3]+="2- یکی از بچه ها برمیگردد."+'\n';
+        level_helps[3]+="3- یکی از کارگر ها عبور می کند"+'\n';
+        level_helps[3]+="4- بچه باقی مانده برمیگردد."+'\n';
+        level_helps[3]+="5- بچه ها عبور می کنند."+'\n';
+        level_helps[3]+="6- یکی از بچه ها برمیگردد."+'\n';
+        level_helps[3]+="7- یک کارگر عبور می کند."+'\n';
+        level_helps[3]+="8- بچه باقی مانده برمیگردد."+'\n';
+        level_helps[3]+="9- بچه ها عبور می کنند."+'\n';
+        level_helps[3]+="تمام"+'\n';
+
+        ///////////////////////////////////////level4
+        level_rules[4]="";
+        level_rules[4]+="5 مرد می خواهند از رودخانه عبور کنند ولی هیچکدام از آنها همسایه بغل دستی خود را دوست ندارد برای مثال مرد شماره 1 مردهای شماره 2 و 5 را دوست ندارد."+'\n';
+        level_rules[4]+="قوانین : "+'\n'+'\n';
+        level_rules[4]+="1- حداکثر ظرفیت قایق 2 نفر است."+'\n';
+        level_rules[4]+="2- اگر 2 مرد همدیگر را دوست نداشته باشند باهم سوار قایق نمی شوند و در دو سمت رودخانه باهم تنها نمی مانند."+'\n';
+        level_rules[4]+="آنها چگونه می توانند از رودخانه عبور کنند؟"+'\n'+'\n';
+
+
+        level_helps[4]="";
+        level_helps[4]+="1- مرد اولی با سومی عبور می کند."+'\n';
+        level_helps[4]+="2- مرد اولی برمیگردد."+'\n';
+        level_helps[4]+="3- مرد دوم با مرد پنجم عبور می کنند"+'\n';
+        level_helps[4]+="4- مرد دوم برمیگردد."+'\n';
+        level_helps[4]+="5- مرد دوم و چهارم عبور می کنند."+'\n';
+        level_helps[4]+="6- مرد چهارم برمیگردد."+'\n';
+        level_helps[4]+="7- مرد اول و چهارم عبور می کنند."+'\n';
+        level_helps[4]+="تمام"+'\n';
+
+        ///////////////////////////////////////level5
+        level_rules[5]="";
+        level_rules[5]+="یک خانواده می خواهند از رودخانه عبور کنند. وزن پدر 90 کیلو، مادر 80 کیلو، پسر 60 کیلو، دختر 40 کیلو هست. همچنین آنها یک کیف به وزن 20 کیلو دارند."+'\n';
+        level_rules[5]+="قوانین : "+'\n'+'\n';
+        level_rules[5]+="1- قایق وزن بیشتر از 100 کیلو را نمی تواند تحمل کند."+'\n';
+        level_rules[5]+="آنها چگونه می توانند از رودخانه عبور کنند؟"+'\n'+'\n';
+
+
+        level_helps[5]="";
+        level_helps[5]+="1ـ 40کیلو + 60 کیلو عبور می کنند."+'\n';
+        level_helps[5]+="2- 40کیلو بر می گردد."+'\n';
+        level_helps[5]+="3- 90کیلو عبور می کند."+'\n';
+        level_helps[5]+="4- 60کیلو برمیگردد."+'\n';
+        level_helps[5]+="5- 40کیلو + 60 کیلو عبور می کنند."+'\n';
+        level_helps[5]+="6- 40کیلو برمیگردد."+'\n';
+        level_helps[5]+="7- 80کیلو + 20 کیلو عبور می کنند.."+'\n';
+        level_helps[5]+="8- 60کیلو بر میگردد."+'\n';
+        level_helps[5]+="9- 40کیلو + 60 کیلو عبور می کنند."+'\n';
+
+        level_helps[5]+="تمام"+'\n';
+
 
 
     }
@@ -578,9 +652,9 @@ public class MainActivity extends AppCompatActivity {
         //     img_obj1.setBackgroundColor(Color.parseColor("#000000"));
         img_obj[1].setImageResource(R.drawable.worker);
         img_obj[1].setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams lp_img_farmer  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.17), (int) (screenHeight * 0.22));
-        img_objects_top[1]= (int) (screenHeight * 0.7);
-        img_objects_start[1] = (int) (screenWidth * 0.870);
+        RelativeLayout.LayoutParams lp_img_farmer  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.13), (int) (screenHeight * 0.22));
+        img_objects_top[1]= (int) (screenHeight * 0.65);
+        img_objects_start[1] = (int) (screenWidth * 0.850);
         lp_img_farmer.topMargin = (img_objects_top[1]);
         lp_img_farmer.setMarginStart(img_objects_start[1]);
         img_obj[1].setLayoutParams(lp_img_farmer);
@@ -591,9 +665,9 @@ public class MainActivity extends AppCompatActivity {
 //        img_obj2.setBackgroundColor(Color.parseColor("#000000"));
         img_obj[2].setImageResource(R.drawable.worker);
         img_obj[2].setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams lp_img_cabbage  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.17), (int) (screenHeight * 0.22));
-        img_objects_start[2] = (int) (screenWidth * 0.78);
-        img_objects_top[2] = (int) (screenHeight * 0.7);
+        RelativeLayout.LayoutParams lp_img_cabbage  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.13), (int) (screenHeight * 0.22));
+        img_objects_start[2] = (int) (screenWidth * 0.76);
+        img_objects_top[2] = (int) (screenHeight * 0.65);
         lp_img_cabbage.topMargin = (img_objects_top[2]);
         lp_img_cabbage.setMarginStart(img_objects_start[2]);
         img_obj[2].setLayoutParams(lp_img_cabbage);
@@ -605,9 +679,9 @@ public class MainActivity extends AppCompatActivity {
 //        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
         img_obj[3].setImageResource(R.drawable.baby);
         img_obj[3].setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams lp_img_wolf = new RelativeLayout.LayoutParams((int) (screenWidth * 0.17), (int) (screenHeight * 0.22));
-        img_objects_start[3] = (int) (screenWidth * 0.69);
-        img_objects_top[3] = (int) (screenHeight * 0.7);
+        RelativeLayout.LayoutParams lp_img_wolf = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.22));
+        img_objects_start[3] = (int) (screenWidth * 0.67);
+        img_objects_top[3] = (int) (screenHeight * 0.65);
         lp_img_wolf.topMargin = (img_objects_top[3]);
         lp_img_wolf.setMarginStart(img_objects_start[3]);
         img_obj[3].setLayoutParams(lp_img_wolf);
@@ -619,9 +693,9 @@ public class MainActivity extends AppCompatActivity {
 //        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
         img_obj[4].setImageResource(R.drawable.baby);
         img_obj[4].setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams lp_img_sheep  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.17), (int) (screenHeight * 0.22));
-        img_objects_start[4] = (int) (screenWidth * 0.62);
-        img_objects_top[4] = (int) (screenHeight * 0.7);
+        RelativeLayout.LayoutParams lp_img_sheep  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.22));
+        img_objects_start[4] = (int) (screenWidth * 0.60);
+        img_objects_top[4] = (int) (screenHeight * 0.65);
         lp_img_sheep.topMargin = (img_objects_top[4]);
         lp_img_sheep.setMarginStart(img_objects_start[4]);
         img_obj[4].setLayoutParams(lp_img_sheep);
@@ -631,7 +705,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        max_move_count=6;
+        max_move_count=9;
         max_game_time=30;
 
 
@@ -641,6 +715,168 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void level4_set() {
+        obj_count = 5;
+
+        img_obj[1] = findViewById(R.id.img_obj1);
+        //     img_obj1.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[1].setImageResource(R.drawable.man1);
+        img_obj[1].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_farmer  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_top[1]= (int) (screenHeight * 0.69);
+        img_objects_start[1] = (int) (screenWidth * 0.880);
+        lp_img_farmer.topMargin = (img_objects_top[1]);
+        lp_img_farmer.setMarginStart(img_objects_start[1]);
+        img_obj[1].setLayoutParams(lp_img_farmer);
+        img_obj[1].setContentDescription("man1");
+        img_obj[1].setTextDirection(1);
+
+        img_obj[2] = findViewById(R.id.img_obj2);
+//        img_obj2.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[2].setImageResource(R.drawable.man2);
+        img_obj[2].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_cabbage  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_start[2] = (int) (screenWidth * 0.79);
+        img_objects_top[2] = (int) (screenHeight * 0.69);
+        lp_img_cabbage.topMargin = (img_objects_top[2]);
+        lp_img_cabbage.setMarginStart(img_objects_start[2]);
+        img_obj[2].setLayoutParams(lp_img_cabbage);
+        img_obj[2].setContentDescription("man2");
+        img_obj[2].setTextDirection(1);
+
+
+        img_obj[3] = findViewById(R.id.img_obj3);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[3].setImageResource(R.drawable.man3);
+        img_obj[3].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_wolf = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_start[3] = (int) (screenWidth * 0.7);
+        img_objects_top[3] = (int) (screenHeight * 0.69);
+        lp_img_wolf.topMargin = (img_objects_top[3]);
+        lp_img_wolf.setMarginStart(img_objects_start[3]);
+        img_obj[3].setLayoutParams(lp_img_wolf);
+        img_obj[3].setContentDescription("man3");
+        img_obj[3].setTextDirection(1);
+
+
+        img_obj[4] = findViewById(R.id.img_obj4);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[4].setImageResource(R.drawable.man4);
+        img_obj[4].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_sheep = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_start[4] = (int) (screenWidth * 0.61);
+        img_objects_top[4] = (int) (screenHeight * 0.73);
+        lp_img_sheep.topMargin = (img_objects_top[4]);
+        lp_img_sheep.setMarginStart(img_objects_start[4]);
+        img_obj[4].setLayoutParams(lp_img_sheep);
+        img_obj[4].setContentDescription("man4");
+        img_obj[4].setTextDirection(1);
+
+        img_obj[5] = findViewById(R.id.img_obj5);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[5].setImageResource(R.drawable.man5);
+        img_obj[5].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_man5 = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_start[5] = (int) (screenWidth * 0.36);
+        img_objects_top[5] = (int) (screenHeight * 0.75);
+        lp_img_man5.topMargin = (img_objects_top[5]);
+        lp_img_man5.setMarginStart(img_objects_start[5]);
+        img_obj[5].setLayoutParams(lp_img_man5);
+        img_obj[5].setContentDescription("man5");
+        img_obj[5].setTextDirection(1);
+
+
+
+        max_move_count=7;
+        max_game_time=30;
+
+
+
+
+
+
+    }
+    private void level5_set() {
+        obj_count = 5;
+
+        img_obj[1] = findViewById(R.id.img_obj1);
+        //     img_obj1.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[1].setImageResource(R.drawable.father);
+        img_obj[1].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_farmer  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.12), (int) (screenHeight * 0.2));
+        img_objects_top[1]= (int) (screenHeight * 0.69);
+        img_objects_start[1] = (int) (screenWidth * 0.880);
+        lp_img_farmer.topMargin = (img_objects_top[1]);
+        lp_img_farmer.setMarginStart(img_objects_start[1]);
+        img_obj[1].setLayoutParams(lp_img_farmer);
+        img_obj[1].setContentDescription("father");
+        img_obj[1].setTextDirection(1);
+
+        img_obj[2] = findViewById(R.id.img_obj2);
+//        img_obj2.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[2].setImageResource(R.drawable.mother);
+        img_obj[2].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_cabbage  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.12), (int) (screenHeight * 0.2));
+        img_objects_start[2] = (int) (screenWidth * 0.81);
+        img_objects_top[2] = (int) (screenHeight * 0.69);
+        lp_img_cabbage.topMargin = (img_objects_top[2]);
+        lp_img_cabbage.setMarginStart(img_objects_start[2]);
+        img_obj[2].setLayoutParams(lp_img_cabbage);
+        img_obj[2].setContentDescription("mother");
+        img_obj[2].setTextDirection(1);
+
+
+        img_obj[3] = findViewById(R.id.img_obj3);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[3].setImageResource(R.drawable.boy);
+        img_obj[3].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_wolf = new RelativeLayout.LayoutParams((int) (screenWidth * 0.10), (int) (screenHeight * 0.2));
+        img_objects_start[3] = (int) (screenWidth * 0.75);
+        img_objects_top[3] = (int) (screenHeight * 0.7);
+        lp_img_wolf.topMargin = (img_objects_top[3]);
+        lp_img_wolf.setMarginStart(img_objects_start[3]);
+        img_obj[3].setLayoutParams(lp_img_wolf);
+        img_obj[3].setContentDescription("boy");
+        img_obj[3].setTextDirection(1);
+
+
+        img_obj[4] = findViewById(R.id.img_obj4);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[4].setImageResource(R.drawable.girl);
+        img_obj[4].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_sheep = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_start[4] = (int) (screenWidth * 0.68);
+        img_objects_top[4] = (int) (screenHeight * 0.73);
+        lp_img_sheep.topMargin = (img_objects_top[4]);
+        lp_img_sheep.setMarginStart(img_objects_start[4]);
+        img_obj[4].setLayoutParams(lp_img_sheep);
+        img_obj[4].setContentDescription("girl");
+        img_obj[4].setTextDirection(1);
+
+        img_obj[5] = findViewById(R.id.img_obj5);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[5].setImageResource(R.drawable.bag);
+        img_obj[5].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_man5 = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.1));
+        img_objects_start[5] = (int) (screenWidth * 0.60);
+        img_objects_top[5] = (int) (screenHeight * 0.77);
+        lp_img_man5.topMargin = (img_objects_top[5]);
+        lp_img_man5.setMarginStart(img_objects_start[5]);
+        img_obj[5].setLayoutParams(lp_img_man5);
+        img_obj[5].setContentDescription("bag");
+        img_obj[5].setTextDirection(1);
+
+
+
+        max_move_count=9;
+        max_game_time=30;
+
+
+
+
+
+
+    }
 
     public boolean check_level1_cross()
     {
@@ -808,6 +1044,249 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
+    public boolean check_level3_cross()
+    {
+        boolean result=true;
+
+
+        //     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+
+
+        if((boat_passengers[1]==img_obj[1] && boat_passengers[2]!=null) || (boat_passengers[2]==img_obj[1] && boat_passengers[1]!=null))
+        {
+            show_message("کارگر باید تنهایی عبور کند");
+            result=false;
+        }
+        else if((boat_passengers[1]==img_obj[2] && boat_passengers[2]!=null) || (boat_passengers[2]==img_obj[2] && boat_passengers[1]!=null))
+        {
+            show_message("کارگر باید تنهایی عبور کند");
+            result=false;
+        }
+
+
+
+
+
+        return result;
+    }
+
+
+    public boolean check_level4_cross()
+    {
+        boolean result=true;
+
+
+        //     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+        int boot_passnger1=0;
+        int boot_passnger2=0;
+
+        if(boat_passengers[1]==img_obj[1])
+            boot_passnger1=1;
+        if(boat_passengers[2]==img_obj[1])
+            boot_passnger2=1;
+
+        if(boat_passengers[1]==img_obj[2])
+            boot_passnger1=2;
+        if(boat_passengers[2]==img_obj[2])
+            boot_passnger2=2;
+
+        if(boat_passengers[1]==img_obj[3])
+            boot_passnger1=3;
+        if(boat_passengers[2]==img_obj[3])
+            boot_passnger2=3;
+
+        if(boat_passengers[1]==img_obj[4])
+            boot_passnger1=4;
+        if(boat_passengers[2]==img_obj[4])
+            boot_passnger2=4;
+
+        if(boat_passengers[1]==img_obj[5])
+            boot_passnger1=5;
+        if(boat_passengers[2]==img_obj[5])
+            boot_passnger2=5;
+
+        if(boot_passnger1>1 && boot_passnger1<5)
+        {
+            if(boot_passnger1==boot_passnger2+1)
+            {
+                result=false;
+                show_message("مرد"+String.valueOf(boot_passnger1)+" با مرد"+String.valueOf(boot_passnger2)+" نمی تواند حرکت کند ");
+
+            }
+            if(boot_passnger1==boot_passnger2-1)
+            {
+                result =false;
+                show_message("مرد"+String.valueOf(boot_passnger1)+" با مرد"+String.valueOf(boot_passnger2)+" نمی تواند حرکت کند ");
+            }
+        }
+        if(boot_passnger1 ==1 )
+        {
+            if(boot_passnger2==2 || boot_passnger2==5)
+            {
+                result=false;
+                show_message("مرد"+String.valueOf(boot_passnger1)+" با مرد"+String.valueOf(boot_passnger2)+" نمی تواند حرکت کند ");
+            }
+        }
+        if(boot_passnger1==5)
+        {
+            if(boot_passnger2==4 || boot_passnger2==1)
+            {
+                result=false;
+                show_message("مرد"+String.valueOf(boot_passnger1)+" با مرد"+String.valueOf(boot_passnger2)+" نمی تواند حرکت کند ");
+            }
+        }
+        if(result) {
+            if (boot_passnger2 > 1 && boot_passnger2 < 5) {
+                if (boot_passnger2 == boot_passnger1 + 1) {
+                    result = false;
+                    show_message("مرد" + String.valueOf(boot_passnger1) + " با مرد" + String.valueOf(boot_passnger2) + " نمی تواند حرکت کند ");
+                }
+                if (boot_passnger2 == boot_passnger1 - 1) {
+                    result = false;
+                    show_message("مرد" + String.valueOf(boot_passnger1) + " با مرد" + String.valueOf(boot_passnger2) + " نمی تواند حرکت کند ");
+                }
+            }
+            if (boot_passnger2 == 1) {
+                if (boot_passnger2 == 2 || boot_passnger1 == 5) {
+                    result = false;
+                    show_message("مرد" + String.valueOf(boot_passnger1) + " با مرد" + String.valueOf(boot_passnger2) + " نمی تواند حرکت کند ");
+                }
+            }
+            if (boot_passnger2 == 5) {
+                if (boot_passnger1 == 4 || boot_passnger1 == 1) {
+                    result = false;
+                    show_message("مرد" + String.valueOf(boot_passnger1) + " با مرد" + String.valueOf(boot_passnger2) + " نمی تواند حرکت کند ");
+                }
+            }
+        }
+        if(result) {
+            if (boat_passengers[1] != null && boat_side.equals("down")) {
+                boat_passengers[1].setTextDirection(2);
+            }
+            if (boat_passengers[2] != null && boat_side.equals("down")) {
+                boat_passengers[2].setTextDirection(2);
+            }
+            if (boat_passengers[1] != null && boat_side.equals("up")) {
+                boat_passengers[1].setTextDirection(1);
+            }
+            if (boat_passengers[2] != null && boat_side.equals("up")) {
+                boat_passengers[2].setTextDirection(1);
+            }
+            boolean
+                    cant = false;
+//                Toast.makeText(this,String.valueOf(img_obj[1].getTextDirection()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, String.valueOf(img_obj[2].getTextDirection()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, String.valueOf(img_obj[4].getTextDirection()), Toast.LENGTH_SHORT).show();
+
+            if ((img_obj[1].getTextDirection() == 1 && img_obj[2].getTextDirection() == 1 && img_obj[3].getTextDirection() != 1 && img_obj[4].getTextDirection() != 1 && img_obj[5].getTextDirection() != 1) || (img_obj[1].getTextDirection() == 2 && img_obj[2].getTextDirection() == 2 && img_obj[3].getTextDirection() != 2 && img_obj[4].getTextDirection() != 2 && img_obj[5].getTextDirection() != 2)) {
+                cant_cros_message = "مرد 1 با مرد 2 نمی تواند تنها بماند";
+                show_message(cant_cros_message);
+                cant = true;
+            }
+            if ((img_obj[1].getTextDirection() == 1 && img_obj[2].getTextDirection() != 1 && img_obj[3].getTextDirection() != 1 && img_obj[4].getTextDirection() != 1 && img_obj[5].getTextDirection() == 1) || (img_obj[1].getTextDirection() == 2 && img_obj[2].getTextDirection() != 2 && img_obj[3].getTextDirection() != 2 && img_obj[4].getTextDirection() != 2 && img_obj[5].getTextDirection() == 2)) {
+                cant_cros_message = "مرد 1 با مرد 5 نمی تواند تنها بماند";
+                show_message(cant_cros_message);
+                cant = true;
+            }
+            if ((img_obj[1].getTextDirection() != 1 && img_obj[2].getTextDirection() == 1 && img_obj[3].getTextDirection() == 1 && img_obj[4].getTextDirection() != 1 && img_obj[5].getTextDirection() != 1) || (img_obj[1].getTextDirection() != 2 && img_obj[2].getTextDirection() == 2 && img_obj[3].getTextDirection() == 2 && img_obj[4].getTextDirection() != 2 && img_obj[5].getTextDirection() != 2)) {
+                cant_cros_message = "مرد 2 با مرد 3 نمی تواند تنها بماند";
+                show_message(cant_cros_message);
+                cant = true;
+            }
+            if ((img_obj[1].getTextDirection() != 1 && img_obj[2].getTextDirection() != 1 && img_obj[3].getTextDirection() == 1 && img_obj[4].getTextDirection() == 1 && img_obj[5].getTextDirection() != 1) || (img_obj[1].getTextDirection() != 2 && img_obj[2].getTextDirection() != 2 && img_obj[3].getTextDirection() == 2 && img_obj[4].getTextDirection() == 2 && img_obj[5].getTextDirection() != 2)) {
+                cant_cros_message = "مرد 3 با مرد 4 نمی تواند تنها بماند";
+                show_message(cant_cros_message);
+                cant = true;
+            }
+            if ((img_obj[1].getTextDirection() != 1 && img_obj[2].getTextDirection() != 1 && img_obj[3].getTextDirection() != 1 && img_obj[4].getTextDirection() == 1 && img_obj[5].getTextDirection() == 1) || (img_obj[1].getTextDirection() != 2 && img_obj[2].getTextDirection() != 2 && img_obj[3].getTextDirection() != 2 && img_obj[4].getTextDirection() == 2 && img_obj[5].getTextDirection() == 2)) {
+                cant_cros_message = "مرد 4 با مرد 5 نمی تواند تنها بماند";
+                show_message(cant_cros_message);
+                cant = true;
+            }
+            if (cant) {
+                if (boat_passengers[1] != null && boat_side.equals("down")) {
+                    boat_passengers[1].setTextDirection(1);
+                }
+                if (boat_passengers[2] != null && boat_side.equals("down")) {
+                    boat_passengers[2].setTextDirection(1);
+                }
+                if (boat_passengers[1] != null && boat_side.equals("up")) {
+                    boat_passengers[1].setTextDirection(2);
+                }
+                if (boat_passengers[2] != null && boat_side.equals("up")) {
+                    boat_passengers[2].setTextDirection(2);
+                }
+                //     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                result = false;
+            }
+        }
+
+
+
+
+
+
+
+        return result;
+    }
+    public boolean check_level5_cross()
+    {
+        boolean result=true;
+
+
+        //     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+        int boot_passnger1=0;
+        int boot_passnger2=0;
+
+        if(boat_passengers[1]==img_obj[1])
+            boot_passnger1=90;
+        if(boat_passengers[2]==img_obj[1])
+            boot_passnger2=90;
+
+        if(boat_passengers[1]==img_obj[2])
+            boot_passnger1=80;
+        if(boat_passengers[2]==img_obj[2])
+            boot_passnger2=80;
+
+        if(boat_passengers[1]==img_obj[3])
+            boot_passnger1=60;
+        if(boat_passengers[2]==img_obj[3])
+            boot_passnger2=60;
+
+        if(boat_passengers[1]==img_obj[4])
+            boot_passnger1=40;
+        if(boat_passengers[2]==img_obj[4])
+            boot_passnger2=40;
+
+        if(boat_passengers[1]==img_obj[5])
+            boot_passnger1=20;
+        if(boat_passengers[2]==img_obj[5])
+            boot_passnger2=20;
+
+
+                if (boot_passnger1 + boot_passnger2 >100) {
+                    result = false;
+                    show_message("وزن قایق نباید بیشتر از 100 کیلو باشد");
+                }
+
+        if(result)
+        {
+            if((boat_passengers[1]==img_obj[5] && boat_passengers[2]==null) || (boat_passengers[2]==img_obj[5] && boat_passengers[1]==null))
+            {
+                result = false;
+                show_message("کیف نمی تواند به تنهایی عبور کند");
+            }
+        }
+
+
+
+
+
+
+
+        return result;
+    }
+
     public void clk_img(View view) {
     }
     String
@@ -819,7 +1298,17 @@ public class MainActivity extends AppCompatActivity {
             result =check_level1_cross();
         }
         if(level_id==2) {
-            result =check_level2_cross();
+        result =check_level2_cross();
+        }
+
+        if(level_id==3) {
+        result =check_level3_cross();
+        }
+        if(level_id==4) {
+            result =check_level4_cross();
+        }
+        if(level_id==5) {
+            result =check_level5_cross();
         }
         return  result;
     }
@@ -938,6 +1427,16 @@ public class MainActivity extends AppCompatActivity {
             result = check_level1_finished();
 
         }
+        if(level_id==4)
+        {
+            result = check_level4_finished();
+
+        }
+        if(level_id==5)
+        {
+            result = check_level4_finished();
+
+        }
      //   result=true;
         if(result) {
           //  Toast.makeText(this, "Its finished", Toast.LENGTH_SHORT).show();
@@ -1040,6 +1539,19 @@ public class MainActivity extends AppCompatActivity {
                         if(boat_passengers[1]==null)
                             if(boat_passengers[2]==null)
                                 result=true;
+        return result;
+    }
+    private boolean check_level4_finished()
+    {
+        boolean result=false;
+        if(img_obj[1].getTextDirection()==2)
+            if(img_obj[2].getTextDirection()==2)
+                if(img_obj[3].getTextDirection()==2)
+                    if(img_obj[4].getTextDirection()==2)
+                        if(img_obj[5].getTextDirection()==2)
+                            if(boat_passengers[1]==null)
+                                if(boat_passengers[2]==null)
+                                    result=true;
         return result;
     }
     public void clk_obj(View view) {
