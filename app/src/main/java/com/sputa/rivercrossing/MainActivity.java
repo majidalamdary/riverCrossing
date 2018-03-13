@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public int level_id=5;
+    public int level_id=6;
 
 
 
@@ -229,6 +229,8 @@ public class MainActivity extends AppCompatActivity {
             level4_set();
         if(level_id==5)
             level5_set();
+        if(level_id==6)
+            level6_set();
 
 
 
@@ -802,6 +804,87 @@ public class MainActivity extends AppCompatActivity {
         img_obj[1] = findViewById(R.id.img_obj1);
         //     img_obj1.setBackgroundColor(Color.parseColor("#000000"));
         img_obj[1].setImageResource(R.drawable.father);
+        img_obj[1].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_farmer  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.12), (int) (screenHeight * 0.2));
+        img_objects_top[1]= (int) (screenHeight * 0.69);
+        img_objects_start[1] = (int) (screenWidth * 0.880);
+        lp_img_farmer.topMargin = (img_objects_top[1]);
+        lp_img_farmer.setMarginStart(img_objects_start[1]);
+        img_obj[1].setLayoutParams(lp_img_farmer);
+        img_obj[1].setContentDescription("father");
+        img_obj[1].setTextDirection(1);
+
+        img_obj[2] = findViewById(R.id.img_obj2);
+//        img_obj2.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[2].setImageResource(R.drawable.mother);
+        img_obj[2].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_cabbage  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.12), (int) (screenHeight * 0.2));
+        img_objects_start[2] = (int) (screenWidth * 0.81);
+        img_objects_top[2] = (int) (screenHeight * 0.69);
+        lp_img_cabbage.topMargin = (img_objects_top[2]);
+        lp_img_cabbage.setMarginStart(img_objects_start[2]);
+        img_obj[2].setLayoutParams(lp_img_cabbage);
+        img_obj[2].setContentDescription("mother");
+        img_obj[2].setTextDirection(1);
+
+
+        img_obj[3] = findViewById(R.id.img_obj3);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[3].setImageResource(R.drawable.boy);
+        img_obj[3].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_wolf = new RelativeLayout.LayoutParams((int) (screenWidth * 0.10), (int) (screenHeight * 0.2));
+        img_objects_start[3] = (int) (screenWidth * 0.75);
+        img_objects_top[3] = (int) (screenHeight * 0.7);
+        lp_img_wolf.topMargin = (img_objects_top[3]);
+        lp_img_wolf.setMarginStart(img_objects_start[3]);
+        img_obj[3].setLayoutParams(lp_img_wolf);
+        img_obj[3].setContentDescription("boy");
+        img_obj[3].setTextDirection(1);
+
+
+        img_obj[4] = findViewById(R.id.img_obj4);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[4].setImageResource(R.drawable.girl);
+        img_obj[4].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_sheep = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_start[4] = (int) (screenWidth * 0.68);
+        img_objects_top[4] = (int) (screenHeight * 0.73);
+        lp_img_sheep.topMargin = (img_objects_top[4]);
+        lp_img_sheep.setMarginStart(img_objects_start[4]);
+        img_obj[4].setLayoutParams(lp_img_sheep);
+        img_obj[4].setContentDescription("girl");
+        img_obj[4].setTextDirection(1);
+
+        img_obj[5] = findViewById(R.id.img_obj5);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[5].setImageResource(R.drawable.bag);
+        img_obj[5].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_man5 = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.1));
+        img_objects_start[5] = (int) (screenWidth * 0.60);
+        img_objects_top[5] = (int) (screenHeight * 0.77);
+        lp_img_man5.topMargin = (img_objects_top[5]);
+        lp_img_man5.setMarginStart(img_objects_start[5]);
+        img_obj[5].setLayoutParams(lp_img_man5);
+        img_obj[5].setContentDescription("bag");
+        img_obj[5].setTextDirection(1);
+
+
+
+        max_move_count=9;
+        max_game_time=30;
+
+
+
+
+
+
+    }
+    private void level6_set() {
+        obj_count = 6;
+
+        img_obj[1] = findViewById(R.id.img_obj1);
+        //     img_obj1.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[1].setImageResource(R.drawable.man_blue);
         img_obj[1].setVisibility(View.VISIBLE);
         RelativeLayout.LayoutParams lp_img_farmer  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.12), (int) (screenHeight * 0.2));
         img_objects_top[1]= (int) (screenHeight * 0.69);
