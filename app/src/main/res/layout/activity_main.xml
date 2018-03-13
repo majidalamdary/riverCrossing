@@ -31,15 +31,15 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/blue_btn"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <TextView
                 android:id="@+id/txt_message1"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="گرگ گوسفند را خواهد خورد"
+                android:text="55"
                 android:textColor="@android:color/black" />
         </LinearLayout>
 
@@ -60,14 +60,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/blue_btn"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <TextView
                 android:id="@+id/txt_message2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="گرگ گوسفند را خواهد خورد"
                 android:textColor="@android:color/black" />
         </LinearLayout>
@@ -89,14 +89,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/blue_btn"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <TextView
                 android:id="@+id/txt_message3"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="گرگ گوسفند را خواهد خورد"
                 android:textColor="@android:color/black" />
         </LinearLayout>
@@ -118,14 +118,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/blue_btn"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <TextView
                 android:id="@+id/txt_message4"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="گرگ گوسفند را خواهد خورد"
                 android:textColor="@android:color/black" />
         </LinearLayout>
@@ -147,14 +147,14 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/blue_btn"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="5dp">
 
             <TextView
                 android:id="@+id/txt_message5"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:text="گرگ گوسفند را خواهد خورد"
                 android:textColor="@android:color/black" />
         </LinearLayout>

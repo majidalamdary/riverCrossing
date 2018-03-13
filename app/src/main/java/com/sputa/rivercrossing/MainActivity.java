@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public int level_id=7;
+    public int level_id=8;
 
 
 
@@ -233,6 +233,8 @@ public class MainActivity extends AppCompatActivity {
             level6_set();
         if(level_id==7)
             level7_set();
+        if(level_id==8)
+            level8_set();
 
 
 
@@ -445,6 +447,33 @@ public class MainActivity extends AppCompatActivity {
 
         level_helps[7]+="تمام"+'\n';
 
+        ///////////////////////////////////////level8
+        level_rules[8]="";
+        level_rules[8]+="سه پلیس و سه دزد می خواهند از رودخانه عبور کنند."+'\n';
+        level_rules[8]+="قوانین : "+'\n'+'\n';
+        level_rules[8]+="1- ظرفیت قایق حداکثر 2 مسافر می باشد و هرکس می تواند قایق را براند."+'\n';
+        level_rules[8]+="2- تعداد دزدها نباید بیشتر از تعداد پلیس ها در هر سمت از رودخانه باشد."+'\n';
+
+        level_rules[8]+="آنها چگونه می توانند از رودخانه عبور کنند؟"+'\n'+'\n';
+
+
+        level_helps[8]="";
+        level_helps[8]+="1- دو دزد عبور می کنند."+'\n';
+        level_helps[8]+="2- یکی از دزدها برمیگردد."+'\n';
+        level_helps[8]+="3-دو دزد عبور می کنند."+'\n';
+        level_helps[8]+="4-یک دزد برمیگردد."+'\n';
+        level_helps[8]+="5-دو پلیس عبور میکنند."+'\n';
+        level_helps[8]+="6- یک پلیس با یک دزد برمیگردد."+'\n';
+        level_helps[8]+="7- دو پلیس عبور میکنند."+'\n';
+        level_helps[8]+="8- یک دزد برمیگردد."+'\n';
+        level_helps[8]+="9- دو دزد عبور میکنند."+'\n';
+        level_helps[8]+="10- یک دزد برمیگردد."+'\n';
+        level_helps[8]+="11- دو دزد عبور می کنند."+'\n';
+
+
+
+
+        level_helps[8]+="تمام"+'\n';
 
 
     }
@@ -1107,6 +1136,100 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void level8_set() {
+        obj_count = 6;
+
+        img_obj[1] = findViewById(R.id.img_obj1);
+        //     img_obj1.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[1].setImageResource(R.drawable.police_man);
+        img_obj[1].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_farmer  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.12), (int) (screenHeight * 0.2));
+        img_objects_top[1]= (int) (screenHeight * 0.69);
+        img_objects_start[1] = (int) (screenWidth * 0.880);
+        lp_img_farmer.topMargin = (img_objects_top[1]);
+        lp_img_farmer.setMarginStart(img_objects_start[1]);
+        img_obj[1].setLayoutParams(lp_img_farmer);
+        img_obj[1].setContentDescription("police_man1");
+        img_obj[1].setTextDirection(1);
+
+        img_obj[2] = findViewById(R.id.img_obj2);
+//        img_obj2.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[2].setImageResource(R.drawable.police_man);
+        img_obj[2].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_cabbage  = new RelativeLayout.LayoutParams((int) (screenWidth * 0.12), (int) (screenHeight * 0.2));
+        img_objects_start[2] = (int) (screenWidth * 0.82);
+        img_objects_top[2] = (int) (screenHeight * 0.69);
+        lp_img_cabbage.topMargin = (img_objects_top[2]);
+        lp_img_cabbage.setMarginStart(img_objects_start[2]);
+        img_obj[2].setLayoutParams(lp_img_cabbage);
+        img_obj[2].setContentDescription("police_man2");
+        img_obj[2].setTextDirection(1);
+
+
+        img_obj[3] = findViewById(R.id.img_obj3);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[3].setImageResource(R.drawable.police_man);
+        img_obj[3].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_wolf = new RelativeLayout.LayoutParams((int) (screenWidth * 0.12), (int) (screenHeight * 0.2));
+        img_objects_start[3] = (int) (screenWidth * 0.76);
+        img_objects_top[3] = (int) (screenHeight * 0.69);
+        lp_img_wolf.topMargin = (img_objects_top[3]);
+        lp_img_wolf.setMarginStart(img_objects_start[3]);
+        img_obj[3].setLayoutParams(lp_img_wolf);
+        img_obj[3].setContentDescription("police_man3");
+        img_obj[3].setTextDirection(1);
+
+
+        img_obj[4] = findViewById(R.id.img_obj4);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[4].setImageResource(R.drawable.robber);
+        img_obj[4].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_sheep = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_start[4] = (int) (screenWidth * 0.705);
+        img_objects_top[4] = (int) (screenHeight * 0.73);
+        lp_img_sheep.topMargin = (img_objects_top[4]);
+        lp_img_sheep.setMarginStart(img_objects_start[4]);
+        img_obj[4].setLayoutParams(lp_img_sheep);
+        img_obj[4].setContentDescription("robber1");
+        img_obj[4].setTextDirection(1);
+
+        img_obj[5] = findViewById(R.id.img_obj5);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[5].setImageResource(R.drawable.robber);
+        img_obj[5].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_man5 = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_start[5] = (int) (screenWidth * 0.625);
+        img_objects_top[5] = (int) (screenHeight * 0.73);
+        lp_img_man5.topMargin = (img_objects_top[5]);
+        lp_img_man5.setMarginStart(img_objects_start[5]);
+        img_obj[5].setLayoutParams(lp_img_man5);
+        img_obj[5].setContentDescription("robber2");
+        img_obj[5].setTextDirection(1);
+
+
+        img_obj[6] = findViewById(R.id.img_obj6);
+//        img_obj3.setBackgroundColor(Color.parseColor("#000000"));
+        img_obj[6].setImageResource(R.drawable.robber);
+        img_obj[6].setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams lp_img_man6 = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.16));
+        img_objects_start[6] = (int) (screenWidth * 0.545);
+        img_objects_top[6] = (int) (screenHeight * 0.73);
+        lp_img_man6.topMargin = (img_objects_top[6]);
+        lp_img_man6.setMarginStart(img_objects_start[6]);
+        img_obj[6].setLayoutParams(lp_img_man6);
+        img_obj[6].setContentDescription("robber3");
+        img_obj[6].setTextDirection(1);
+
+        max_move_count=11;
+        max_game_time=40;
+
+
+
+
+
+
+    }
+
 
     public boolean check_level1_cross()
     {
@@ -1680,6 +1803,131 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
+    public boolean check_level8_cross()
+    {
+        boolean result=true;
+
+
+        //     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+
+
+
+
+        if(result) {
+            if (boat_passengers[1] != null && boat_side.equals("down")) {
+                boat_passengers[1].setTextDirection(2);
+            }
+            if (boat_passengers[2] != null && boat_side.equals("down")) {
+                boat_passengers[2].setTextDirection(2);
+            }
+            if (boat_passengers[1] != null && boat_side.equals("up")) {
+                boat_passengers[1].setTextDirection(1);
+            }
+            if (boat_passengers[2] != null && boat_side.equals("up")) {
+                boat_passengers[2].setTextDirection(1);
+            }
+            boolean
+                    cant = false;
+//                Toast.makeText(this,String.valueOf(img_obj[1].getTextDirection()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, String.valueOf(img_obj[2].getTextDirection()), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, String.valueOf(img_obj[4].getTextDirection()), Toast.LENGTH_SHORT).show();
+
+            int
+                    police_count=0;
+            int
+                    robber_count=0;
+
+            if(img_obj[1].getTextDirection()==1)
+            {
+                police_count++;
+            }
+            if(img_obj[2].getTextDirection()==1)
+            {
+                police_count++;
+            }
+            if(img_obj[3].getTextDirection()==1)
+            {
+                police_count++;
+            }
+            if(img_obj[4].getTextDirection()==1)
+            {
+                robber_count++;
+            }
+            if(img_obj[5].getTextDirection()==1)
+            {
+                robber_count++;
+            }
+            if(img_obj[6].getTextDirection()==1)
+            {
+                robber_count++;
+            }
+
+            if(robber_count>police_count && police_count!=0)
+            {
+                cant=true;
+                show_message("تعداد دزدها بیشتر از پلیس ها می شود  ");
+            }
+            if(!cant)
+            {
+                police_count=0;
+                robber_count=0;
+
+                if(img_obj[1].getTextDirection()==2)
+                {
+                    police_count++;
+                }
+                if(img_obj[2].getTextDirection()==2)
+                {
+                    police_count++;
+                }
+                if(img_obj[3].getTextDirection()==2)
+                {
+                    police_count++;
+                }
+                if(img_obj[4].getTextDirection()==2)
+                {
+                    robber_count++;
+                }
+                if(img_obj[5].getTextDirection()==2)
+                {
+                    robber_count++;
+                }
+                if(img_obj[6].getTextDirection()==2)
+                {
+                    robber_count++;
+                }
+
+                if(robber_count>police_count && police_count!=0)
+                {
+                    cant=true;
+                    show_message("تعداد دزدها بیشتر از پلیس ها می شود  ");
+                }
+            }
+
+            if (cant) {
+                if (boat_passengers[1] != null && boat_side.equals("down")) {
+                    boat_passengers[1].setTextDirection(1);
+                }
+                if (boat_passengers[2] != null && boat_side.equals("down")) {
+                    boat_passengers[2].setTextDirection(1);
+                }
+                if (boat_passengers[1] != null && boat_side.equals("up")) {
+                    boat_passengers[1].setTextDirection(2);
+                }
+                if (boat_passengers[2] != null && boat_side.equals("up")) {
+                    boat_passengers[2].setTextDirection(2);
+                }
+                //     Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+                result = false;
+            }
+        }
+
+
+
+
+
+        return result;
+    }
 
     public void clk_img(View view) {
     }
@@ -1710,6 +1958,10 @@ public class MainActivity extends AppCompatActivity {
         if(level_id==7) {
             result =check_level7_cross();
         }
+        if(level_id==8) {
+            result =check_level8_cross();
+        }
+
         return  result;
     }
 
@@ -1845,6 +2097,11 @@ public class MainActivity extends AppCompatActivity {
         if(level_id==7)
         {
             result = check_level4_finished();
+
+        }
+        if(level_id==8)
+        {
+            result = check_level6_finished();
 
         }
      //   result=true;
