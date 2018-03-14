@@ -1,9 +1,873 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layoutDirection="rtl"
+    android:background="@drawable/background"
     tools:context="com.sputa.rivercrossing.Menu">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#82ffffff"
+
+        android:orientation="vertical"></LinearLayout>
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/lay_level1"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginEnd="40dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/papyrus"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.2"
+                        android:gravity="bottom|center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_level1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="مرحله 1"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.3"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_level1"
+                            android:layout_width="80dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/farmer" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|end"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star11"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star12"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|clip_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star13"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_off" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"></LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/lay_level2"
+                android:layout_width="200dp"
+                android:layout_height="200dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/papyrus"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.2"
+                        android:gravity="bottom|center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_level2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="مرحله 2"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.3"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_level2"
+                            android:layout_width="80dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/blue_knight" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|end"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star21"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star22"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|clip_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star23"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_off" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"></LinearLayout>
+
+            </RelativeLayout>
+            <!--///////////-->
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/lay_level3"
+                android:layout_width="200dp"
+                android:layout_height="200dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/papyrus"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.2"
+                        android:gravity="bottom|center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_level3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="مرحله 3"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.3"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_level3"
+                            android:layout_width="80dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/worker" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|end"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star31"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star32"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|clip_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star33"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_off" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"></LinearLayout>
+
+            </RelativeLayout>
+            <!--///////////-->
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/lay_level4"
+                android:layout_width="200dp"
+                android:layout_height="200dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/papyrus"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.2"
+                        android:gravity="bottom|center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_level4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="مرحله 4"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.3"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_level4"
+                            android:layout_width="80dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/man1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|end"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star41"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star42"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|clip_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star43"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_off" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"></LinearLayout>
+
+            </RelativeLayout>
+            <!--///////////-->
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/lay_level5"
+                android:layout_width="200dp"
+                android:layout_height="200dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/papyrus"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.2"
+                        android:gravity="bottom|center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_level5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="مرحله 5"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.3"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_level5"
+                            android:layout_width="80dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/train" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|end"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star51"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star52"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|clip_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star53"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_off" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"></LinearLayout>
+
+            </RelativeLayout>
+            <!--///////////-->
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/lay_level6"
+                android:layout_width="200dp"
+                android:layout_height="200dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/papyrus"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.2"
+                        android:gravity="bottom|center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_level6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="مرحله 6"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.3"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_level6"
+                            android:layout_width="80dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/man_red" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|end"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star61"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star62"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|clip_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star63"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_off" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"></LinearLayout>
+
+            </RelativeLayout>
+            <!--///////////-->
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/lay_level7"
+                android:layout_width="200dp"
+                android:layout_height="200dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/papyrus"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.2"
+                        android:gravity="bottom|center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_level7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="مرحله 7"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.3"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_level7"
+                            android:layout_width="80dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/father1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|end"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star71"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star72"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|clip_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star73"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_off" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"></LinearLayout>
+
+            </RelativeLayout>
+            <!--///////////-->
+            <RelativeLayout
+                android:layout_width="30dp"
+                android:layout_height="match_parent">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/lay_level8"
+                android:layout_width="200dp"
+                android:layout_height="200dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/papyrus"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.2"
+                        android:gravity="bottom|center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/lbl_level8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="مرحله 8"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2.3"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/img_level8"
+                            android:layout_width="80dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/robber" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|end"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star81"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".5"
+                            android:gravity="top|center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star82"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_on" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="top|clip_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/star83"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:srcCompat="@android:drawable/btn_star_big_off" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"></LinearLayout>
+
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+
+
+    </HorizontalScrollView>
+
+</RelativeLayout>
