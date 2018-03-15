@@ -275,6 +275,22 @@
         android:visibility="gone"
         android:clickable="true"
         android:onClick="clk_obj"/>
+    <ImageView
+        android:id="@+id/img_obj7"
+        android:layout_width="130dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:visibility="gone"
+        android:clickable="true"
+        android:onClick="clk_obj"/>
+    <ImageView
+        android:id="@+id/img_obj8"
+        android:layout_width="130dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:visibility="gone"
+        android:clickable="true"
+        android:onClick="clk_obj"/>
 
     <LinearLayout
         android:layout_width="match_parent"
