@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -131,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
         img_coin.setLayoutParams(lp_img_coin);
 
         LinearLayout lay_coin = findViewById(R.id.lay_coin);
-        RelativeLayout.LayoutParams lp_lay_coin = new RelativeLayout.LayoutParams((int) (screenWidth * 0.21), (int) (screenHeight * 0.1));
+        RelativeLayout.LayoutParams lp_lay_coin = new RelativeLayout.LayoutParams((int) (screenWidth * 0.24), (int) (screenHeight * 0.1));
         lp_lay_coin.topMargin = (int) (screenHeight * 0.005);
-        lp_lay_coin.setMarginStart(((int) (screenWidth * 0.84)));
+        lp_lay_coin.setMarginStart(((int) (screenWidth * 0.81)));
         lay_coin.setLayoutParams(lp_lay_coin);
 
 
@@ -152,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams layoutParams_txt_coin = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        layoutParams_txt_coin.setMargins(0, (int) (screenHeight * 0.007), (int) (screenWidth * 0.855), 0);
+        layoutParams_txt_coin.setMargins(0, (int) (screenHeight * 0.007), (int) (screenWidth * 0.82), 0);
         txt_coin.setLayoutParams(layoutParams_txt_coin);
         txt_coin.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.035));
         txt_coin.setTypeface(tf);
@@ -331,6 +332,8 @@ public class MainActivity extends AppCompatActivity {
             level14_set();
         if(level_id==15)
             level15_set();
+
+
 
     }
 
@@ -3797,7 +3800,7 @@ public class MainActivity extends AppCompatActivity {
                 img_star2.setImageResource(R.drawable.question);
             else {
                 img_star2.setImageResource(R.drawable.star);
-                str_cnt=2;
+                str_cnt++;
             }
             RelativeLayout.LayoutParams lp_img_star2 = new RelativeLayout.LayoutParams((int)(screenWidth*.07),(int)(screenHeight*.07));
             lp_img_star2.topMargin = (int)(screenHeight*.279);
@@ -3817,7 +3820,7 @@ public class MainActivity extends AppCompatActivity {
                 img_star3.setImageResource(R.drawable.question);
             else {
                 img_star3.setImageResource(R.drawable.star);
-                str_cnt=3;
+                str_cnt++;
             }
             RelativeLayout.LayoutParams lp_img_star3 = new RelativeLayout.LayoutParams((int)(screenWidth*.07),(int)(screenHeight*.07));
             lp_img_star3.topMargin = (int)(screenHeight*.279);

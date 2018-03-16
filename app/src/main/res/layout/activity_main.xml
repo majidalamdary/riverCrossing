@@ -247,12 +247,14 @@
         android:onClick="clk_btn"
 
         app:srcCompat="@drawable/move_button" />
+
     <ImageView
         android:id="@+id/img_music"
         android:layout_width="130dp"
         android:layout_height="100dp"
         android:layout_alignParentStart="true"
         android:clickable="true"
+        android:visibility="gone"
         app:srcCompat="@drawable/music" />
 
     <ImageView

@@ -1,7 +1,9 @@
 package com.sputa.rivercrossing;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -9,6 +11,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.drm.DrmStore;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +23,7 @@ import android.util.AndroidException;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -31,6 +37,16 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.sputa.rivercrossing.app.Config;
 import com.sputa.rivercrossing.util.NotificationUtils;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URLEncoder;
 
 public class Menu extends AppCompatActivity {
@@ -38,6 +54,9 @@ public class Menu extends AppCompatActivity {
     int screenHeight = 0;
     String
             font_name = "";
+
+    public MyAsyncTask mm;
+
     Typeface tf;
     SQLiteDatabase mydatabase;
     int
@@ -46,11 +65,38 @@ public class Menu extends AppCompatActivity {
             star_cnt;
     int
             finished_level;
-    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    public BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Toast.makeText(context, intent.getAction(), Toast.LENGTH_SHORT).show();
+                // checking for type intent filter
+                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+
+                    displayFirebaseRegId();
+
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+
+                    String message = intent.getStringExtra("message");
+
+                    //  Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+
+                    //  Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        };
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
         wm.getDefaultDisplay().getMetrics(displayMetrics);
@@ -124,63 +170,53 @@ public class Menu extends AppCompatActivity {
 
 
 
-        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
 
-                // checking for type intent filter
-                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    // gcm successfully registered
-                    // now subscribe to `global` topic to receive app wide notifications
-                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
 
-                    displayFirebaseRegId();
-
-                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
-                    // new push notification is received
-
-                    String message = intent.getStringExtra("message");
-
-                    //  Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
-
-                    //  Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        };
-
-      //  displayFirebaseRegId();
+        displayFirebaseRegId();
 
 
     }
+    static boolean
+            music_playing=true;
     private void displayFirebaseRegId() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        String regId = pref.getString("regId11", null);
+        String regId = pref.getString("regId", null);
 
         Log.e("majid", "Firebase reg id: " + regId);
 //        EditText ed1 = findViewById(R.id.editText2);
 //        ed1.setText(regId);
         if (!TextUtils.isEmpty(regId)) {
-             Toast.makeText(this, "Firebase Reg Id: " + regId, Toast.LENGTH_SHORT).show();
-//            mm =  new MyAsyncTask();
-//
-//            {
-//
-//                mm.url =  getResources().getString(R.string.site_url) +"do.php?param=new_user&gcm_id="+ URLEncoder.encode(regId)+"&user_info="+URLEncoder.encode(getDeviceName());
-//
-//                mm.execute("");
-//            }
+      //       Toast.makeText(this, "Firebase Reg Id: " + regId, Toast.LENGTH_SHORT).show();
+            mm =  new MyAsyncTask();
+
+            {
+
+                mm.url =  getResources().getString(R.string.site_url) +"do.php?param=new_user&gcm_id="+ URLEncoder.encode(regId)+"&user_info="+URLEncoder.encode(getDeviceName());
+
+                mm.execute("");
+            }
         }
 //        else
 //            Toast.makeText(this,"Firebase Reg Id is not received yet!", Toast.LENGTH_SHORT).show();
     }
 
-
+    public String getDeviceName() {
+        String manufacturer = Build.MANUFACTURER;
+        String model = Build.MODEL;
+        String release = Build.VERSION.RELEASE;
+        int sdkVersion = Build.VERSION.SDK_INT;
+        model += ("---"+sdkVersion + " (" + release +")");
+        if (model.startsWith(manufacturer)) {
+            return (model);
+        } else {
+            return (manufacturer) + " " + model;
+        }
+    }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Toast.makeText(this, "o5k", Toast.LENGTH_SHORT).show();
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
                 new IntentFilter(Config.REGISTRATION_COMPLETE));
 
@@ -531,10 +567,11 @@ public class Menu extends AppCompatActivity {
 
 
     }
+    boolean
+            flag=true;
     private void clk_go_level_main(int lvl_id)
     {
-        boolean
-            flag=true;
+        flag=true;
 //        star_cnt=100;
 //        finished_level=100;
         if(lvl_id==2)
@@ -703,6 +740,7 @@ public class Menu extends AppCompatActivity {
         }
         if(lvl_id==11)
         {
+            flag=false;
             if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level11);
@@ -716,11 +754,88 @@ public class Menu extends AppCompatActivity {
                     img.setImageResource(R.drawable.father1);
                     img_status[lvl_id]=0;
                 }
-                flag=false;
+
+            }
+            else
+            {
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                String
+                        lvl_state = pref.getString("level11",null);
+                String
+                        lvl_state_temp ="";
+                if(lvl_state!=null)
+                    lvl_state_temp=lvl_state;
+                if(lvl_state_temp.equals("1"))
+                {
+                    Intent i = new Intent(this,MainActivity.class);
+                    i.putExtra("lvl_id",String.valueOf(lvl_id));
+                    startActivity(i);
+                }
+                else {
+                    flag = false;
+                    if (get_coin_count() >= 500) {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                          set_coint_count(500,"sub");
+                                        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("level11", "1");
+                                        editor.commit();
+                                        Intent i = new Intent(getBaseContext(),MainActivity.class);
+                                        i.putExtra("lvl_id","11");
+                                        startActivity(i);
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        flag = false;
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("آیا می خواهید در ازای 500 سکه این مرحله را باز کنید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    } else {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+
+                                        startActivity(new Intent(getBaseContext()
+                                                , Store.class));
+
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("سکه های شما کافی نیست آیا می خواهید برای خرید سکه به فروشگاه بروید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    }
+                }
             }
         }
         if(lvl_id==12)
         {
+            flag=false;
             if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level12);
@@ -734,11 +849,88 @@ public class Menu extends AppCompatActivity {
                     img.setImageResource(R.drawable.rabit);
                     img_status[lvl_id]=0;
                 }
-                flag=false;
+
+            }
+            else
+            {
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                String
+                        lvl_state = pref.getString("level12",null);
+                String
+                        lvl_state_temp ="";
+                if(lvl_state!=null)
+                    lvl_state_temp=lvl_state;
+                if(lvl_state_temp.equals("1"))
+                {
+                    Intent i = new Intent(this,MainActivity.class);
+                    i.putExtra("lvl_id",String.valueOf(lvl_id));
+                    startActivity(i);
+                }
+                else {
+                    flag = false;
+                    if (get_coin_count() >= 500) {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        set_coint_count(500,"sub");
+                                        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("level12", "1");
+                                        editor.commit();
+                                        Intent i = new Intent(getBaseContext(),MainActivity.class);
+                                        i.putExtra("lvl_id","12");
+                                        startActivity(i);
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        flag = false;
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("آیا می خواهید در ازای 500 سکه این مرحله را باز کنید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    } else {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+
+                                        startActivity(new Intent(getBaseContext()
+                                                , Store.class));
+
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("سکه های شما کافی نیست آیا می خواهید برای خرید سکه به فروشگاه بروید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    }
+                }
             }
         }
         if(lvl_id==13)
         {
+            flag=false;
             if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level13);
@@ -752,11 +944,88 @@ public class Menu extends AppCompatActivity {
                     img.setImageResource(R.drawable.bag);
                     img_status[lvl_id]=0;
                 }
-                flag=false;
+
+            }
+            else
+            {
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                String
+                        lvl_state = pref.getString("level13",null);
+                String
+                        lvl_state_temp ="";
+                if(lvl_state!=null)
+                    lvl_state_temp=lvl_state;
+                if(lvl_state_temp.equals("1"))
+                {
+                    Intent i = new Intent(this,MainActivity.class);
+                    i.putExtra("lvl_id",String.valueOf(lvl_id));
+                    startActivity(i);
+                }
+                else {
+                    flag = false;
+                    if (get_coin_count() >= 500) {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        set_coint_count(500,"sub");
+                                        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("level13", "1");
+                                        editor.commit();
+                                        Intent i = new Intent(getBaseContext(),MainActivity.class);
+                                        i.putExtra("lvl_id","13");
+                                        startActivity(i);
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        flag = false;
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("آیا می خواهید در ازای 500 سکه این مرحله را باز کنید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    } else {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+
+                                        startActivity(new Intent(getBaseContext()
+                                                , Store.class));
+
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("سکه های شما کافی نیست آیا می خواهید برای خرید سکه به فروشگاه بروید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    }
+                }
             }
         }
         if(lvl_id==14)
         {
+            flag=false;
             if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level14);
@@ -770,11 +1039,89 @@ public class Menu extends AppCompatActivity {
                     img.setImageResource(R.drawable.cat);
                     img_status[lvl_id]=0;
                 }
-                flag=false;
+
             }
+            else
+            {
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                String
+                        lvl_state = pref.getString("level14",null);
+                String
+                        lvl_state_temp ="";
+                if(lvl_state!=null)
+                    lvl_state_temp=lvl_state;
+                if(lvl_state_temp.equals("1"))
+                {
+                    Intent i = new Intent(this,MainActivity.class);
+                    i.putExtra("lvl_id",String.valueOf(lvl_id));
+                    startActivity(i);
+                }
+                else {
+                    flag = false;
+                    if (get_coin_count() >= 500) {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        set_coint_count(500,"sub");
+                                        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("level14", "1");
+                                        editor.commit();
+                                        Intent i = new Intent(getBaseContext(),MainActivity.class);
+                                        i.putExtra("lvl_id","14");
+                                        startActivity(i);
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        flag = false;
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("آیا می خواهید در ازای 500 سکه این مرحله را باز کنید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    } else {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+
+                                        startActivity(new Intent(getBaseContext()
+                                                , Store.class));
+
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("سکه های شما کافی نیست آیا می خواهید برای خرید سکه به فروشگاه بروید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    }
+                }
+            }
+
         }
         if(lvl_id==15)
         {
+            flag=false;
             if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level15);
@@ -788,7 +1135,83 @@ public class Menu extends AppCompatActivity {
                     img.setImageResource(R.drawable.black_king);
                     img_status[lvl_id]=0;
                 }
-                flag=false;
+
+            }
+            else
+            {
+                SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                String
+                        lvl_state = pref.getString("level15",null);
+                String
+                        lvl_state_temp ="";
+                if(lvl_state!=null)
+                    lvl_state_temp=lvl_state;
+                if(lvl_state_temp.equals("1"))
+                {
+                    Intent i = new Intent(this,MainActivity.class);
+                    i.putExtra("lvl_id",String.valueOf(lvl_id));
+                    startActivity(i);
+                }
+                else {
+                    flag = false;
+                    if (get_coin_count() >= 1000) {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        set_coint_count(500,"sub");
+                                        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("level15", "1");
+                                        editor.commit();
+                                        Intent i = new Intent(getBaseContext(),MainActivity.class);
+                                        i.putExtra("lvl_id","15");
+                                        startActivity(i);
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        flag = false;
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("آیا می خواهید در ازای 1000 سکه این مرحله را باز کنید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    } else {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+
+                                        startActivity(new Intent(getBaseContext()
+                                                , Store.class));
+
+                                        break;
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+
+                                        break;
+
+                                }
+                            }
+                        };
+
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage("سکه های شما کافی نیست آیا می خواهید برای خرید سکه به فروشگاه بروید").setPositiveButton("بله", dialogClickListener)
+                                .setNegativeButton("خیر", dialogClickListener).show();
+                    }
+                }
             }
         }
         if(flag)
@@ -846,4 +1269,152 @@ public class Menu extends AppCompatActivity {
         clk_go_level_main(15);
     }
 
+    public void clk_store(View view) {
+        startActivity(new Intent(this,Store.class));
+    }
+    public void set_coint_count(int coint_cnt,String typ)
+    {
+        SQLiteDatabase mydatabase = openOrCreateDatabase(getResources().getString(R.string.database_name), MODE_PRIVATE, null);
+
+        Cursor resultSet = mydatabase.rawQuery("Select * from coins where id=1", null);
+        //Log.d("majid",String.valueOf(resultSet.getCount())+"1");
+        if (resultSet.getCount() > 0) {
+            resultSet.moveToFirst();
+            //   et_guild_name.setText(resultSet.getString(1));
+        }
+        int
+                new_cnt = Integer.parseInt(resultSet.getString(1));
+        if(typ.equals("add"))
+            new_cnt+=coint_cnt;
+        else
+            new_cnt-=coint_cnt;
+        mydatabase.execSQL("update coins set coin_count="+String.valueOf(new_cnt)+" where id=1");
+//        TextView txt_coin = findViewById(R.id.txt_coin);
+//        txt_coin.setText(String.valueOf(new_cnt));
+
+    }
+
+    private class MyAsyncTask extends AsyncTask<String, Integer, Double> {
+
+
+
+        public  String ss="",url="";
+
+
+
+
+
+        @Override
+        protected Double doInBackground(String... params) {
+            // TODO Auto-generated method stub
+
+            //  dd=params[0];
+            try {
+                postData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Double result){
+
+            //  pb.setVisibility(View.GONE);
+            //   Toast.makeText(MainActivity.this, ss, Toast.LENGTH_SHORT).show();
+            int
+                    start=ss.indexOf("<output>");
+            int
+                    end=ss.indexOf("</output>");
+            String
+                    output_str="";
+            if(end>0 && ss.length()>0) {
+                output_str = ss.substring(start + 8, end);
+                int
+                        start1 = ss.indexOf("<param>");
+                int
+                        end1 = ss.indexOf("</param>");
+                String
+                        param_str = "";
+                param_str = ss.substring(start1 + 7, end1);
+
+//                if (param_str.equals("get_version")) {
+//                    int
+//                            i = 0;
+//                    try {
+//                        i = Integer.valueOf(output_str);
+//                    } catch (Exception e1) {
+//                        //    Log.d("majid", e1.getMessage()+"---"+ss+"---");
+//                    }
+//                    // Log.d("majid",String.valueOf(i));
+//                    if (i > 0) {
+//
+//                        if (i != BuildConfig.VERSION_CODE) {
+//                            Toast.makeText(getBaseContext(), getResources().getString(R.string.need_update_message), Toast.LENGTH_LONG).show();
+//
+//                        }
+//                    }
+//                }
+                if (param_str.equals("new_user")) {
+                    start1 = ss.indexOf("<result>");
+                    end1 = ss.indexOf("</result>");
+                    String
+                            result1 = "";
+                    result1 = ss.substring(start1 + 8, end1);
+                    //     Toast.makeText(getBaseContext(),result1,Toast.LENGTH_SHORT).show();
+                }
+                // Toast.makeText(getBaseContext(),param_str+"////"+output_str,Toast.LENGTH_SHORT).show();
+
+
+            }
+
+
+
+
+
+            //Toast.makeText(getBaseContext(),"ver="+http_result,Toast.LENGTH_SHORT).show();
+//            AlertDialog.Builder builder1 = new AlertDialog.Builder(getBaseContext());
+//            builder1.setTitle(getResources().getString(R.string.update));
+//            builder1.setMessage(getResources().getString(R.string.need_update_message));
+//            builder1.setCancelable(true);
+//            builder1.setNeutralButton(android.R.string.ok,
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//
+
+
+
+//            AlertDialog alert11 = builder1.create();
+//            alert11.show();
+
+
+        }
+
+        protected void onProgressUpdate(Integer... progress){
+            //pb.setProgress(progress[0]);
+        }
+
+        public void postData() throws IOException {
+            HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
+            HttpGet httpget = new HttpGet(url); // Set the action you want to do
+            HttpResponse response = httpclient.execute(httpget); // Executeit
+            HttpEntity entity = response.getEntity();
+            InputStream is = entity.getContent(); // Create an InputStream with the response
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf8"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) // Read line by line
+                sb.append(line);
+
+            String resString = sb.toString(); // Result is here
+            ss = resString;
+            //Log.d("majid", resString);
+            is.close();
+        }
+
+    }
+
 }
+

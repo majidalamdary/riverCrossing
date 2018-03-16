@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">RiverCrossing</string>
     <string name="database_name">RC</string>
+    <string name="site_url">http://sputa-app.ir/app/rivercrossing/</string>
+
 
 </resources>
