@@ -1,24 +1,37 @@
 package com.sputa.rivercrossing;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.drm.DrmStore;
 import android.graphics.Typeface;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.AndroidException;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.sputa.rivercrossing.app.Config;
+import com.sputa.rivercrossing.util.NotificationUtils;
+
+import java.net.URLEncoder;
 
 public class Menu extends AppCompatActivity {
     int screenWidth = 0;
@@ -33,7 +46,7 @@ public class Menu extends AppCompatActivity {
             star_cnt;
     int
             finished_level;
-
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,8 +124,88 @@ public class Menu extends AppCompatActivity {
 
 
 
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                // checking for type intent filter
+                if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
+                    // gcm successfully registered
+                    // now subscribe to `global` topic to receive app wide notifications
+                    FirebaseMessaging.getInstance().subscribeToTopic(Config.TOPIC_GLOBAL);
+
+                    displayFirebaseRegId();
+
+                } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
+                    // new push notification is received
+
+                    String message = intent.getStringExtra("message");
+
+                    //  Toast.makeText(getApplicationContext(), "Push notification: " + message, Toast.LENGTH_LONG).show();
+
+                    //  Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        };
+
+      //  displayFirebaseRegId();
+
 
     }
+    private void displayFirebaseRegId() {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
+        String regId = pref.getString("regId11", null);
+
+        Log.e("majid", "Firebase reg id: " + regId);
+//        EditText ed1 = findViewById(R.id.editText2);
+//        ed1.setText(regId);
+        if (!TextUtils.isEmpty(regId)) {
+             Toast.makeText(this, "Firebase Reg Id: " + regId, Toast.LENGTH_SHORT).show();
+//            mm =  new MyAsyncTask();
+//
+//            {
+//
+//                mm.url =  getResources().getString(R.string.site_url) +"do.php?param=new_user&gcm_id="+ URLEncoder.encode(regId)+"&user_info="+URLEncoder.encode(getDeviceName());
+//
+//                mm.execute("");
+//            }
+        }
+//        else
+//            Toast.makeText(this,"Firebase Reg Id is not received yet!", Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "o5k", Toast.LENGTH_SHORT).show();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.REGISTRATION_COMPLETE));
+
+        // register new push message receiver
+        // by doing this, the activity will be notified each time a new message arrives
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(Config.PUSH_NOTIFICATION));
+
+        // clear the notification area when the app is opened
+        NotificationUtils.clearNotifications(getApplicationContext());
+
+        coin_cnt=get_coin_count();
+        TextView txt_coin = findViewById(R.id.txt_coin);
+        txt_coin.setText(String.valueOf(coin_cnt));
+
+        TextView txt_star_count = findViewById(R.id.txt_star_count);
+        txt_star_count.setText(String.valueOf(star_cnt));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+    }
+
     int[] img_status = new int[16];
     private int get_coin_count()
     {
@@ -432,7 +525,7 @@ public class Menu extends AppCompatActivity {
                 star[id].setImageResource(android.R.drawable.btn_star_big_on);
 
             }
-
+            resultSet.moveToNext();
 
         }
 
@@ -440,6 +533,10 @@ public class Menu extends AppCompatActivity {
     }
     private void clk_go_level_main(int lvl_id)
     {
+        boolean
+            flag=true;
+//        star_cnt=100;
+//        finished_level=100;
         if(lvl_id==2)
         {
             if(star_cnt<1 && finished_level<(lvl_id-1))
@@ -455,10 +552,250 @@ public class Menu extends AppCompatActivity {
                     img_leve2.setImageResource(R.drawable.blue_knight);
                     img_status[lvl_id]=0;
                 }
-
-
-
+                flag=false;
             }
+
+        }
+        if(lvl_id==3)
+        {
+            if(star_cnt<4 && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level3);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs3);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.worker);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==4)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level4);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs4);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.man1);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+
+        if(lvl_id==5)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level5);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs5);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.train);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==6)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level6);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs6);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.man_red);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==7)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level7);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs7);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.father1);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==8)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level8);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs8);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.robber);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==9)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level9);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs9);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.blue_coach);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==10)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level10);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs10);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.mother1);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==11)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level11);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs11);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.father1);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==12)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level12);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs12);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.rabit);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==13)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level13);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs13);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.bag);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==14)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level14);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs14);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.cat);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(lvl_id==15)
+        {
+            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            {
+                ImageView img = findViewById(R.id.img_level15);
+                if(img_status[lvl_id]!=1) {
+
+                    img.setImageResource(R.drawable.needs15);
+                    img_status[lvl_id]=1;
+                }
+                else
+                {
+                    img.setImageResource(R.drawable.black_king);
+                    img_status[lvl_id]=0;
+                }
+                flag=false;
+            }
+        }
+        if(flag)
+        {
+            Intent i = new Intent(this,MainActivity.class);
+            i.putExtra("lvl_id",String.valueOf(lvl_id));
+            startActivity(i);
         }
     }
 

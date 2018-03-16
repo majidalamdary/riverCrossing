@@ -1,7 +1,11 @@
 package com.sputa.rivercrossing;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     int[] img_location = new int[11];
 
     ImageView[] img_in_top = new ImageView[9];
-
+    SQLiteDatabase mydatabase;
     int
             time=0;
     boolean
@@ -76,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     boolean
         game_is_running=false;
     public TextView txt_timer;
+    public TextView txt_move;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
 //        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         set_level_rule_and_help();
+
+
+        mydatabase = openOrCreateDatabase(getResources().getString(R.string.database_name), MODE_PRIVATE, null);
+
+
+        Intent ii=getIntent();
+        level_id = Integer.valueOf(ii.getStringExtra("lvl_id"));
+
 
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
@@ -98,16 +112,29 @@ public class MainActivity extends AppCompatActivity {
 
         img_move_button = findViewById(R.id.img_move_button);
         RelativeLayout.LayoutParams lp_img_move_button = new RelativeLayout.LayoutParams((int) (screenWidth * 0.13), (int) (screenHeight * 0.13));
-        lp_img_move_button.topMargin = (int) (screenHeight * 0.49);
+        lp_img_move_button.topMargin = (int) (screenHeight * 0.45);
         lp_img_move_button.setMarginStart(((int) (screenWidth * 0.01)));
         img_move_button.setLayoutParams(lp_img_move_button);
 
         ImageView img_music = findViewById(R.id.img_music);
-        RelativeLayout.LayoutParams lp_img_music = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.1));
+        RelativeLayout.LayoutParams lp_img_music = new RelativeLayout.LayoutParams((int) (screenWidth * 0.14), (int) (screenHeight * 0.11));
         lp_img_music.topMargin = (int) (screenHeight * 0.8);
         lp_img_music.setMarginStart(((int) (screenWidth * 0.01)));
         img_music.setLayoutParams(lp_img_music);
 
+
+
+        ImageView img_coin = findViewById(R.id.img_coin);
+        RelativeLayout.LayoutParams lp_img_coin = new RelativeLayout.LayoutParams((int) (screenWidth * 0.1), (int) (screenHeight * 0.1));
+        lp_img_coin.topMargin = (int) (screenHeight * 0.005);
+        lp_img_coin.setMarginStart(((int) (screenWidth * 0.9)));
+        img_coin.setLayoutParams(lp_img_coin);
+
+        LinearLayout lay_coin = findViewById(R.id.lay_coin);
+        RelativeLayout.LayoutParams lp_lay_coin = new RelativeLayout.LayoutParams((int) (screenWidth * 0.21), (int) (screenHeight * 0.1));
+        lp_lay_coin.topMargin = (int) (screenHeight * 0.005);
+        lp_lay_coin.setMarginStart(((int) (screenWidth * 0.84)));
+        lay_coin.setLayoutParams(lp_lay_coin);
 
 
         font_name = "fonts/BYekan.ttf";
@@ -120,6 +147,16 @@ public class MainActivity extends AppCompatActivity {
         txt_back.setLayoutParams(layoutParams);
         txt_back.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.035));
         txt_back.setTypeface(tf);
+
+        TextView txt_coin = findViewById(R.id.txt_coin);
+        RelativeLayout.LayoutParams layoutParams_txt_coin = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        layoutParams_txt_coin.setMargins(0, (int) (screenHeight * 0.007), (int) (screenWidth * 0.855), 0);
+        txt_coin.setLayoutParams(layoutParams_txt_coin);
+        txt_coin.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.035));
+        txt_coin.setTypeface(tf);
+        txt_coin.setText(String.valueOf(get_coin_count()));
 
         TextView txt_play_again = findViewById(R.id.txt_play_again);
         RelativeLayout.LayoutParams layoutParams1 = new RelativeLayout.LayoutParams(
@@ -140,10 +177,18 @@ public class MainActivity extends AppCompatActivity {
         txt_timer = findViewById(R.id.txt_timer);
         RelativeLayout.LayoutParams layoutParams3 = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams3.setMargins(0, (int) (screenHeight * 0.228), (int) (screenWidth * 0.649), 0);
+        layoutParams3.setMargins(0, (int) (screenHeight * 0.635), (int) (screenWidth * 0.01), 0);
         txt_timer.setLayoutParams(layoutParams3);
-        txt_timer.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.027));
+        txt_timer.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.03));
         txt_timer.setTypeface(tf);
+
+        txt_move = findViewById(R.id.txt_move);
+        RelativeLayout.LayoutParams layoutParams3_txt_move = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams3_txt_move.setMargins(0, (int) (screenHeight * 0.71), (int) (screenWidth * 0.01), 0);
+        txt_move.setLayoutParams(layoutParams3_txt_move);
+        txt_move.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.03));
+        txt_move.setTypeface(tf);
 
 
         int message_text_size=(int) (screenWidth * 0.022);
@@ -194,13 +239,11 @@ public class MainActivity extends AppCompatActivity {
 //        lbl_timer.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.021));
 //        lbl_timer.setTypeface(tf);
 
-        TextView txt_helps = findViewById(R.id.txt_helps);
+        ImageView img_help = findViewById(R.id.img_help);
         RelativeLayout.LayoutParams layoutParams44 = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-        layoutParams44.setMargins(0, (int) (screenHeight * 0.805), (int) (screenWidth * 0.142), 0);
-        txt_helps.setLayoutParams(layoutParams44);
-        txt_helps.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.033));
-        txt_helps.setTypeface(tf);
+                (int) (screenWidth * 0.155),(int) (screenHeight * 0.17));
+        layoutParams44.setMargins(0, (int) (screenHeight * 0.78), (int) (screenWidth * 0.142), 0);
+        img_help.setLayoutParams(layoutParams44);
 
         for (int i = 1; i <= 10; i++) {
             img_location[i] = 1;
@@ -291,7 +334,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private int get_coin_count()
+    {
+        Cursor resultSet = mydatabase.rawQuery("Select * from coins where id=1", null);
+        int
+                cnt_coin = 0;
+        if (resultSet.getCount() == 1) {
+            resultSet.moveToFirst();
+            cnt_coin = (resultSet.getInt(1));
 
+        }
+        return cnt_coin;
+    }
     private void set_level_rule_and_help()
     {
         ///////////////////////////////////////level1
@@ -824,7 +878,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        max_move_count=6;
+        max_move_count=7;
         max_game_time=30;
 
 
@@ -3547,7 +3601,7 @@ public class MainActivity extends AppCompatActivity {
                 int new_strt = ((int) (screenWidth * 0.55));
                 img_boat.animate().x(new_strt).y(new_top).setDuration(500).start();
                 move_count++;
-
+                txt_move.setText("حرکت "+String.valueOf(move_count));
                 if (boat_passengers[1] != null) {
                     hight = boat_passengers[1].getHeight();
                     width = boat_passengers[1].getWidth();
@@ -3583,7 +3637,7 @@ public class MainActivity extends AppCompatActivity {
                 int new_strt = ((int) (screenWidth * 0.371));
                 img_boat.animate().x(new_strt).y(new_top).setDuration(500).start();
                 move_count++;
-
+                txt_move.setText("حرکت "+String.valueOf(move_count));
                 if (boat_passengers[1] != null) {
                     hight = boat_passengers[1].getHeight();
                     width = boat_passengers[1].getWidth();
@@ -3735,13 +3789,16 @@ public class MainActivity extends AppCompatActivity {
         //    scal.setFillAfter(true);
 
             img_star1.setAnimation(scal);
-
+            int
+                str_cnt=1;
             ImageView img_star2=findViewById(R.id.img_star2);
             img_star2.setVisibility(View.VISIBLE);
             if(move_count>max_move_count)
                 img_star2.setImageResource(R.drawable.question);
-            else
+            else {
                 img_star2.setImageResource(R.drawable.star);
+                str_cnt=2;
+            }
             RelativeLayout.LayoutParams lp_img_star2 = new RelativeLayout.LayoutParams((int)(screenWidth*.07),(int)(screenHeight*.07));
             lp_img_star2.topMargin = (int)(screenHeight*.279);
             //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
@@ -3758,8 +3815,10 @@ public class MainActivity extends AppCompatActivity {
             img_star3.setVisibility(View.VISIBLE);
             if(time>max_game_time)
                 img_star3.setImageResource(R.drawable.question);
-            else
+            else {
                 img_star3.setImageResource(R.drawable.star);
+                str_cnt=3;
+            }
             RelativeLayout.LayoutParams lp_img_star3 = new RelativeLayout.LayoutParams((int)(screenWidth*.07),(int)(screenHeight*.07));
             lp_img_star3.topMargin = (int)(screenHeight*.279);
             //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
@@ -3771,6 +3830,8 @@ public class MainActivity extends AppCompatActivity {
            // scal.setFillAfter(true);
 
             img_star3.setAnimation(scal);
+
+            mydatabase.execSQL("update stars set star_count="+String.valueOf(str_cnt)+" where id="+String.valueOf(level_id));
 
 
 
@@ -3933,7 +3994,10 @@ public class MainActivity extends AppCompatActivity {
                                     RelativeLayout.LayoutParams lp_img_my_obj;
                                     lp_img_my_obj = (RelativeLayout.LayoutParams) img_my_obj.getLayoutParams();
                                     lp_img_my_obj.topMargin = ((int) (screenHeight * 0.60)) - img_my_obj.getHeight();
-                                    lp_img_my_obj.setMarginStart(((int) (screenWidth * 0.1)) + ((int) (screenWidth * 0.07)) * j);
+                                    if(level_id==12)
+                                        lp_img_my_obj.setMarginStart(((int) (screenWidth * 0.1)) + ((int) (screenWidth * 0.07)) * j);
+                                    else
+                                        lp_img_my_obj.setMarginStart(((int) (screenWidth * 0.1)) + ((int) (screenWidth * 0.1)) * j);
                                     img_my_obj.setLayoutParams(lp_img_my_obj);
                                     img_in_top[j] = img_my_obj;
                                     img_location[i] = 2;
@@ -4078,65 +4142,150 @@ public class MainActivity extends AppCompatActivity {
         //Toast.makeText(this, "11", Toast.LENGTH_SHORT).show();
         return;
     }
+    public void set_coint_count(int coint_cnt,String typ)
+    {
+        SQLiteDatabase mydatabase = openOrCreateDatabase(getResources().getString(R.string.database_name), MODE_PRIVATE, null);
+
+        Cursor resultSet = mydatabase.rawQuery("Select * from coins where id=1", null);
+        //Log.d("majid",String.valueOf(resultSet.getCount())+"1");
+        if (resultSet.getCount() > 0) {
+            resultSet.moveToFirst();
+            //   et_guild_name.setText(resultSet.getString(1));
+        }
+        int
+                new_cnt = Integer.parseInt(resultSet.getString(1));
+        if(typ.equals("add"))
+            new_cnt+=coint_cnt;
+        else
+            new_cnt-=coint_cnt;
+        mydatabase.execSQL("update coins set coin_count="+String.valueOf(new_cnt)+" where id=1");
+        TextView txt_coin = findViewById(R.id.txt_coin);
+        txt_coin.setText(String.valueOf(new_cnt));
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int
+                coin_cnt=get_coin_count();
+        TextView txt_coin = findViewById(R.id.txt_coin);
+        txt_coin.setText(String.valueOf(coin_cnt));
+
+
+    }
 
     public void clk_help(View view) {
 
-        LinearLayout lay_rules = findViewById(R.id.lay_rules);
-        lay_rules.setBackground(getResources().getDrawable(R.drawable.help_panel));
-        lay_rules.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams lp_lay_rules = new RelativeLayout.LayoutParams((int)(screenWidth*.63),(int)(screenHeight*.8));
-        lp_lay_rules.topMargin = (int)(screenHeight*.05);
-        //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
-        lp_lay_rules.setMarginStart((int)(screenWidth*.16));
-        lay_rules.setLayoutParams(lp_lay_rules);
-        LinearLayout lay_cover = findViewById(R.id.lay_cover);
-        lay_cover.setVisibility(View.VISIBLE);
-        TextView txt_rules = findViewById(R.id.txt_rules_body);
 
-        txt_rules.setText(level_helps[level_id]);
-        txt_rules.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.026));
+        if(get_coin_count()>=100) {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+                            set_coint_count(100,"sub");
+                            LinearLayout lay_rules = findViewById(R.id.lay_rules);
+                            lay_rules.setBackground(getResources().getDrawable(R.drawable.help_panel));
+                            lay_rules.setVisibility(View.VISIBLE);
+                            RelativeLayout.LayoutParams lp_lay_rules = new RelativeLayout.LayoutParams((int) (screenWidth * .63), (int) (screenHeight * .8));
+                            lp_lay_rules.topMargin = (int) (screenHeight * .050);
+                            //lp_lay_finished.leftMargin =(int)(screenWidth*.5);
+                            lp_lay_rules.setMarginStart((int) (screenWidth * .16));
+                            lay_rules.setLayoutParams(lp_lay_rules);
+                            LinearLayout lay_cover = findViewById(R.id.lay_cover);
+                            lay_cover.setVisibility(View.VISIBLE);
+                            TextView txt_rules = findViewById(R.id.txt_rules_body);
 
-        txt_rules.setTypeface(tf);
+                            txt_rules.setText(level_helps[level_id]);
+                            txt_rules.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.026));
 
-        lay_rules.setOnTouchListener(new View.OnTouchListener()    {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
+                            txt_rules.setTypeface(tf);
 
-                float x =  event.getX();
-                float y =  event.getY();
+                            lay_rules.setOnTouchListener(new View.OnTouchListener() {
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
 
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        float zx = ((x/screenWidth));
-                        float zy = ((y/screenHeight));
-                        //  Toast.makeText(MainActivity.this, String.valueOf(zx)+"down"+String.valueOf(zy), Toast.LENGTH_SHORT).show();
+                                    float x = event.getX();
+                                    float y = event.getY();
 
-                        if(zx>.5674 && zx<6178)
-                            if(zy>.04314 && zy<.1703) {
-                                // Toast.makeText(MainActivity.this, "ok", Toast.LENGTH_SHORT).show();
-                                LinearLayout lay_rules = findViewById(R.id.lay_rules);
-                                lay_rules.setVisibility(View.GONE);
-                                LinearLayout lay_cover = findViewById(R.id.lay_cover);
-                                lay_cover.setVisibility(View.GONE);
-                                if(!game_is_running)
-                                    game_is_running=true;
-                            }
+                                    switch (event.getAction()) {
+                                        case MotionEvent.ACTION_DOWN:
+                                            float zx = ((x / screenWidth));
+                                            float zy = ((y / screenHeight));
+                                            //  Toast.makeText(MainActivity.this, String.valueOf(zx)+"down"+String.valueOf(zy), Toast.LENGTH_SHORT).show();
+
+                                            if (zx > .5674 && zx < 6178)
+                                                if (zy > .04314 && zy < .1703) {
+                                                    // Toast.makeText(MainActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                                                    LinearLayout lay_rules = findViewById(R.id.lay_rules);
+                                                    lay_rules.setVisibility(View.GONE);
+                                                    LinearLayout lay_cover = findViewById(R.id.lay_cover);
+                                                    lay_cover.setVisibility(View.GONE);
+                                                    if (!game_is_running)
+                                                        game_is_running = true;
+                                                }
 
 
+                                            break;
 
-
-                        break;
-
-                }
+                                    }
 //04013
 //06013
 
 
 //                01796
 //                        02370
-                return true;
-            }
-        });
+                                    return true;
+                                }
+                            });
+
+
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+
+                            break;
+
+                    }
+                }
+            };
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("آیا می خواهید در ازای 100 سکه راهنمایی را ببینید").setPositiveButton("بله", dialogClickListener)
+                    .setNegativeButton("خیر", dialogClickListener).show();
+        }
+        else
+        {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+
+                            startActivity(new Intent(getBaseContext()
+                                    ,Store.class));
+
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+
+                            break;
+
+                    }
+                }
+            };
+
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("سکه های شما کافی نیست آیا می خواهید برای دریافت سکه رایگان و یا خرید سکه به فروشگاه بروید").setPositiveButton("بله", dialogClickListener)
+                    .setNegativeButton("خیر", dialogClickListener).show();
+        }
 
     }
 
@@ -4145,6 +4294,10 @@ public class MainActivity extends AppCompatActivity {
 
         finish();
         startActivity(getIntent());
+    }
+
+    public void clk_back(View view) {
+        finish();
     }
 
     public class Timer1 extends Thread {
@@ -4177,27 +4330,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                                txt_timer.setText(String.valueOf((int)(time/60)) +":"+((int)(time%60)) );
-
-                                Rect bounds = new Rect();
-                                Paint textPaint = txt_timer.getPaint();
+                                txt_timer.setText(" زمان  "+String.valueOf((int)(time/60)) +":"+((int)(time%60)) );
 
 
-                                textPaint.getTextBounds("88:88", 0, 4, bounds);
-
-                                // int height = bounds.height();
-                                int width_adad = bounds.width();
-
-                                textPaint.getTextBounds(txt_timer.getText().toString(), 0, txt_timer.getText().toString().length(), bounds);
-
-                               // int height = bounds.height();
-                                int width = bounds.width();
-
-
-                                RelativeLayout.LayoutParams layoutParams3 = new RelativeLayout.LayoutParams(
-                                        RelativeLayout.LayoutParams.WRAP_CONTENT,RelativeLayout.LayoutParams.WRAP_CONTENT);
-                                layoutParams3.setMargins(0, (int) (screenHeight * 0.228), ((int) (screenWidth * 0.649))+((int)((width_adad-width)/2)), 0);
-                                txt_timer.setLayoutParams(layoutParams3);
 
 
                                // Toast.makeText(MainActivity.this, String.valueOf(width), Toast.LENGTH_SHORT).show();
