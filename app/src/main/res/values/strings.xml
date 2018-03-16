@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RiverCrossing</string>
+    <string name="database_name">RC</string>
+
 </resources>
