@@ -41,6 +41,16 @@
 
         </activity>
         <activity
+            android:name="ir.adad.client.AdadActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+        <meta-data
+            android:name="AdadToken"
+            android:value="b79ba2766754418bacfb0bdcbf2f3dea" />
+        <!--<meta-data-->
+        <!--android:name="AdadTestMode"-->
+        <!--android:value="true" />-->
+        <activity
             android:name=".Store"
             android:screenOrientation="landscape" />
         <activity android:name=".Splash"

@@ -371,13 +371,13 @@ public class Store extends AppCompatActivity {
                         Toast.makeText(Store.this, "ممنون که ویدیو را نگاه کردید", Toast.LENGTH_SHORT).show();
 
 
-                        set_coint_count(50, "add");
+                        set_coint_count(100, "add");
                         TextView txt_coin = findViewById(R.id.txt_coin);
                         int coin_cnt = get_coin_count();
                         txt_coin.setText(String.valueOf(coin_cnt));
                         //   Toast.makeText(getBaseContext(),"",Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder = new AlertDialog.Builder(Store.this);
-                        builder.setMessage("تعداد " + "50" + " سکه به سکه های شما افزوده شد")
+                        builder.setMessage("تعداد " + "100" + " سکه به سکه های شما افزوده شد")
                                 .setCancelable(false)
                                 .setPositiveButton("ممنونم", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {

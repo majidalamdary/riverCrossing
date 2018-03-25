@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.drm.DrmStore;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.constraint.ConstraintLayout;
@@ -49,6 +50,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
 
+import ir.adad.client.Adad;
+
 public class Menu extends AppCompatActivity {
     int screenWidth = 0;
     int screenHeight = 0;
@@ -69,6 +72,7 @@ public class Menu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Adad.initialize(getApplicationContext());
         setContentView(R.layout.activity_menu);
 
 
@@ -232,8 +236,25 @@ public class Menu extends AppCompatActivity {
         TextView txt_coin = findViewById(R.id.txt_coin);
         txt_coin.setText(String.valueOf(coin_cnt));
 
+        Cursor resultSet = mydatabase.rawQuery("Select sum(star_count) as sm from stars ", null);
+        star_cnt = 0;
+        if (resultSet.getCount() == 1) {
+            resultSet.moveToFirst();
+            star_cnt = (resultSet.getInt(0));
+
+        }
+        resultSet = mydatabase.rawQuery("Select * from finished_level where id=1", null);
+        finished_level = 0;
+        if (resultSet.getCount() == 1) {
+            resultSet.moveToFirst();
+            finished_level = (resultSet.getInt(1));
+
+        }
+
+
         TextView txt_star_count = findViewById(R.id.txt_star_count);
         txt_star_count.setText(String.valueOf(star_cnt));
+        set_content();
     }
 
     @Override
@@ -366,7 +387,9 @@ public class Menu extends AppCompatActivity {
         RelativeLayout lay_level15=findViewById(R.id.lay_level15);
         lay_level15.setLayoutParams(lp_img_move_button);
 
-
+        LinearLayout.LayoutParams lp_img_heart = new LinearLayout.LayoutParams((int) (screenWidth * 0.09), (int) (screenHeight * 0.09));
+        ImageView img_heart = findViewById(R.id.img_heart);
+        img_heart.setLayoutParams(lp_img_heart);
 
 
         LinearLayout.LayoutParams lp_img_level1 = new LinearLayout.LayoutParams((int) (screenWidth * 0.2), (int) (screenHeight * 0.25));
@@ -642,7 +665,7 @@ public class Menu extends AppCompatActivity {
                 }
                 else
                 {
-                    img.setImageResource(R.drawable.train);
+                    img.setImageResource(R.drawable.father1);
                     img_status[lvl_id]=0;
                 }
                 flag=false;
@@ -678,7 +701,7 @@ public class Menu extends AppCompatActivity {
                 }
                 else
                 {
-                    img.setImageResource(R.drawable.father1);
+                    img.setImageResource(R.drawable.train);
                     img_status[lvl_id]=0;
                 }
                 flag=false;
@@ -1292,6 +1315,23 @@ public class Menu extends AppCompatActivity {
 //        TextView txt_coin = findViewById(R.id.txt_coin);
 //        txt_coin.setText(String.valueOf(new_cnt));
 
+    }
+
+    public void clk_heart(View view) {
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(Menu.this);
+        builder1.setMessage("دوست گرامی این برنامه در حال تکمیل شدن می باشد لطفا با نظرات سازنده و پنج ستاره دادن از ما حمایت کنید، ممنون")
+                .setCancelable(false)
+                .setPositiveButton("اوکی", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(Intent.ACTION_EDIT);
+                        intent.setData(Uri.parse("bazaar://details?id=com.sputa.rivercrossing"));
+                        intent.setPackage("com.farsitel.bazaar");
+                        startActivity(intent);
+                        //   finish();
+                    }
+                });
+        AlertDialog alert1 = builder1.create();
+        alert1.show();
     }
 
     private class MyAsyncTask extends AsyncTask<String, Integer, Double> {

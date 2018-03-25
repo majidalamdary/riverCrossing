@@ -460,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
         level_helps[6]+="1-مسافر دوم با کیفش عبور می کند."+'\n';
         level_helps[6]+="2- مسافر دوم برمیگردد."+'\n';
         level_helps[6]+="3-مسافران دوم و سوم عبور می کنند."+'\n';
-        level_helps[6]+="4-مسافر چهارم بر میگردد."+'\n';
+        level_helps[6]+="4-مسافر سوم بر میگردد."+'\n';
         level_helps[6]+="5-مسافران اول و سوم عبور می کنند."+'\n';
         level_helps[6]+="6- مسافر اول برمیگردد."+'\n';
         level_helps[6]+="7- مسافر اول با یکی از کیف هایش عبور می کند."+'\n';
@@ -714,7 +714,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void clk_next()
     {
-        startActivity(new Intent(this,Menu.class));
+        finish();
     }
     private void clk_again()
     {
@@ -951,7 +951,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        max_move_count=6;
+        max_move_count=7;
         max_game_time=30;
 
 

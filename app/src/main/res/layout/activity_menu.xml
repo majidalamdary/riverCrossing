@@ -70,7 +70,16 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="horizontal"></LinearLayout>
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_heart"
+                    android:layout_width="50dp"
+                    android:onClick="clk_heart"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/heart" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -607,7 +616,7 @@
                                     android:id="@+id/img_level5"
                                     android:layout_width="80dp"
                                     android:layout_height="100dp"
-                                    android:src="@drawable/train" />
+                                    android:src="@drawable/father1" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -819,7 +828,7 @@
                                     android:id="@+id/img_level7"
                                     android:layout_width="80dp"
                                     android:layout_height="100dp"
-                                    android:src="@drawable/father1" />
+                                    android:src="@drawable/train" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -1747,7 +1756,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal"></LinearLayout>
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ir.adad.client.Banner
+                android:id="@+id/banner_ad_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+        </LinearLayout>
     </LinearLayout>
 
 
