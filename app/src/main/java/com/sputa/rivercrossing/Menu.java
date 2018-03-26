@@ -15,6 +15,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +27,9 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -159,6 +162,7 @@ public class Menu extends AppCompatActivity {
         if (resultSet.getCount() == 1) {
             resultSet.moveToFirst();
             finished_level = (resultSet.getInt(1));
+           // Toast.makeText(this, String.valueOf(finished_level)+"ee1", Toast.LENGTH_SHORT).show();
 
         }
         TextView txt_coin = findViewById(R.id.txt_coin);
@@ -166,7 +170,6 @@ public class Menu extends AppCompatActivity {
 
         TextView txt_star_count = findViewById(R.id.txt_star_count);
         txt_star_count.setText(String.valueOf(star_cnt));
-
 
         set_content();
 
@@ -178,13 +181,22 @@ public class Menu extends AppCompatActivity {
 
         displayFirebaseRegId();
 
+        mm =  new MyAsyncTask();
+
+        {
+
+            mm.url =  getResources().getString(R.string.site_url) +"do.php?param=logs&reg_id="+ URLEncoder.encode(regId)+"&type=log_in";
+
+            mm.execute("");
+        }
 
     }
     static boolean
             music_playing=true;
+    String regId;
     private void displayFirebaseRegId() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences(Config.SHARED_PREF, 0);
-        String regId = pref.getString("regId", null);
+         regId = pref.getString("regId", null);
 
         Log.e("majid", "Firebase reg id: " + regId);
 //        EditText ed1 = findViewById(R.id.editText2);
@@ -256,8 +268,31 @@ public class Menu extends AppCompatActivity {
         txt_star_count.setText(String.valueOf(star_cnt));
         set_content();
     }
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
+    public void onBackPressed() {
+
+
+            LinearLayout lay_main=findViewById(R.id.lay_main);
+            enableDisableView(lay_main,false);
+        LinearLayout lay_cover=findViewById(R.id.lay_cover);
+        lay_cover.setVisibility(View.VISIBLE);
+
+
+    }
+    public  void enableDisableView(View view, boolean enabled) {
+        view.setEnabled(enabled);
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+
+            for (int idx = 0; idx < group.getChildCount(); idx++) {
+                enableDisableView(group.getChildAt(idx), enabled);
+            }
+        }
+    }
+
+        @Override
     protected void onPause() {
         super.onPause();
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
@@ -429,6 +464,33 @@ public class Menu extends AppCompatActivity {
 
 
 
+        LinearLayout.LayoutParams lp_lay_message = new LinearLayout.LayoutParams((int) (screenWidth * 0.62), (int) (screenHeight * 0.6));
+
+        LinearLayout lay_message=findViewById(R.id.lay_message);
+        lay_message.setLayoutParams(lp_lay_message);
+        TextView txt_exit_message = findViewById(R.id.txt_exit_message);
+        txt_exit_message.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.034));
+        txt_exit_message.setTypeface(tf);
+
+
+        Button btn_stay=findViewById(R.id.btn_stay);
+        LinearLayout.LayoutParams lp_btn_stay = new LinearLayout.LayoutParams((int) (screenWidth * 0.16), (int) (screenHeight * 0.12));
+        btn_stay.setLayoutParams(lp_btn_stay);
+        btn_stay.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.028));
+        btn_stay.setTypeface(tf);
+
+        Button btn_comment=findViewById(R.id.btn_comment);
+        LinearLayout.LayoutParams lp_btn_comment = new LinearLayout.LayoutParams((int) (screenWidth * 0.16), (int) (screenHeight * 0.12));
+        btn_comment.setLayoutParams(lp_btn_comment);
+        btn_comment.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.028));
+        btn_comment.setTypeface(tf);
+
+
+        Button btn_exit=findViewById(R.id.btn_exit);
+        LinearLayout.LayoutParams lp_btn_exit = new LinearLayout.LayoutParams((int) (screenWidth * 0.16), (int) (screenHeight * 0.12));
+        btn_exit.setLayoutParams(lp_btn_exit);
+        btn_exit.setTextSize(TypedValue.COMPLEX_UNIT_PX, (int) (screenWidth * 0.028));
+        btn_exit.setTypeface(tf);
 
         LinearLayout.LayoutParams lp_star11 = new LinearLayout.LayoutParams((int) (screenWidth * 0.08), (int) (screenHeight * 0.08));
 
@@ -597,9 +659,17 @@ public class Menu extends AppCompatActivity {
         flag=true;
 //        star_cnt=100;
 //        finished_level=100;
+        mm =  new MyAsyncTask();
+
+        {
+
+            mm.url =  getResources().getString(R.string.site_url) +"do.php?param=logs&reg_id="+ URLEncoder.encode(regId)+"&type=go_level-"+String.valueOf(lvl_id);
+
+            mm.execute("");
+        }
         if(lvl_id==2)
         {
-            if(star_cnt<1 && finished_level<(lvl_id-1))
+            if(star_cnt<1 || finished_level<(lvl_id-1))
             {
                 if(img_status[lvl_id]!=1) {
                     ImageView img_leve2 = findViewById(R.id.img_level2);
@@ -618,7 +688,7 @@ public class Menu extends AppCompatActivity {
         }
         if(lvl_id==3)
         {
-            if(star_cnt<4 && finished_level<(lvl_id-1))
+            if(star_cnt<4 || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level3);
                 if(img_status[lvl_id]!=1) {
@@ -636,8 +706,9 @@ public class Menu extends AppCompatActivity {
         }
         if(lvl_id==4)
         {
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
+
                 ImageView img = findViewById(R.id.img_level4);
                 if(img_status[lvl_id]!=1) {
 
@@ -655,8 +726,10 @@ public class Menu extends AppCompatActivity {
 
         if(lvl_id==5)
         {
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
+              //  Toast.makeText(this, String.valueOf(finished_level), Toast.LENGTH_SHORT).show();
+
                 ImageView img = findViewById(R.id.img_level5);
                 if(img_status[lvl_id]!=1) {
 
@@ -673,7 +746,7 @@ public class Menu extends AppCompatActivity {
         }
         if(lvl_id==6)
         {
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level6);
                 if(img_status[lvl_id]!=1) {
@@ -691,7 +764,7 @@ public class Menu extends AppCompatActivity {
         }
         if(lvl_id==7)
         {
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level7);
                 if(img_status[lvl_id]!=1) {
@@ -709,7 +782,7 @@ public class Menu extends AppCompatActivity {
         }
         if(lvl_id==8)
         {
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level8);
                 if(img_status[lvl_id]!=1) {
@@ -727,7 +800,7 @@ public class Menu extends AppCompatActivity {
         }
         if(lvl_id==9)
         {
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level9);
                 if(img_status[lvl_id]!=1) {
@@ -745,7 +818,7 @@ public class Menu extends AppCompatActivity {
         }
         if(lvl_id==10)
         {
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level10);
                 if(img_status[lvl_id]!=1) {
@@ -764,7 +837,7 @@ public class Menu extends AppCompatActivity {
         if(lvl_id==11)
         {
             flag=false;
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level11);
                 if(img_status[lvl_id]!=1) {
@@ -859,7 +932,7 @@ public class Menu extends AppCompatActivity {
         if(lvl_id==12)
         {
             flag=false;
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level12);
                 if(img_status[lvl_id]!=1) {
@@ -954,7 +1027,7 @@ public class Menu extends AppCompatActivity {
         if(lvl_id==13)
         {
             flag=false;
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level13);
                 if(img_status[lvl_id]!=1) {
@@ -1049,7 +1122,7 @@ public class Menu extends AppCompatActivity {
         if(lvl_id==14)
         {
             flag=false;
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level14);
                 if(img_status[lvl_id]!=1) {
@@ -1145,7 +1218,7 @@ public class Menu extends AppCompatActivity {
         if(lvl_id==15)
         {
             flag=false;
-            if(star_cnt<((lvl_id-1)*2) && finished_level<(lvl_id-1))
+            if(star_cnt<((lvl_id-1)*2) || finished_level<(lvl_id-1))
             {
                 ImageView img = findViewById(R.id.img_level15);
                 if(img_status[lvl_id]!=1) {
@@ -1293,6 +1366,14 @@ public class Menu extends AppCompatActivity {
     }
 
     public void clk_store(View view) {
+        mm =  new MyAsyncTask();
+
+        {
+
+            mm.url =  getResources().getString(R.string.site_url) +"do.php?param=logs&reg_id="+ URLEncoder.encode(regId)+"&type=go_store";
+
+            mm.execute("");
+        }
         startActivity(new Intent(this,Store.class));
     }
     public void set_coint_count(int coint_cnt,String typ)
@@ -1318,20 +1399,30 @@ public class Menu extends AppCompatActivity {
     }
 
     public void clk_heart(View view) {
-        AlertDialog.Builder builder1 = new AlertDialog.Builder(Menu.this);
-        builder1.setMessage("دوست گرامی این برنامه در حال تکمیل شدن می باشد لطفا با نظرات سازنده و پنج ستاره دادن از ما حمایت کنید، ممنون")
-                .setCancelable(false)
-                .setPositiveButton("اوکی", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(Intent.ACTION_EDIT);
-                        intent.setData(Uri.parse("bazaar://details?id=com.sputa.rivercrossing"));
-                        intent.setPackage("com.farsitel.bazaar");
-                        startActivity(intent);
-                        //   finish();
-                    }
-                });
-        AlertDialog alert1 = builder1.create();
-        alert1.show();
+        mm =  new MyAsyncTask();
+
+        {
+
+            mm.url =  getResources().getString(R.string.site_url) +"do.php?param=logs&reg_id="+ URLEncoder.encode(regId)+"&type=heart";
+
+            mm.execute("");
+        }
+        Intent intent = new Intent(Intent.ACTION_EDIT);
+        intent.setData(Uri.parse("bazaar://details?id=com.sputa.rivercrossing"));
+        intent.setPackage("com.farsitel.bazaar");
+        startActivity(intent);
+    }
+
+    public void clk_stay(View view) {
+        LinearLayout lay_main=findViewById(R.id.lay_main);
+        enableDisableView(lay_main,true);
+        LinearLayout lay_cover=findViewById(R.id.lay_cover);
+        lay_cover.setVisibility(View.GONE);
+
+    }
+
+    public void clk_exit(View view) {
+        finish();
     }
 
     private class MyAsyncTask extends AsyncTask<String, Integer, Double> {

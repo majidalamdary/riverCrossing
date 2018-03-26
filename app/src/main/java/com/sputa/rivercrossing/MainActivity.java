@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +33,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
     int screenWidth = 0;
@@ -3837,6 +3849,22 @@ public class MainActivity extends AppCompatActivity {
             mydatabase.execSQL("update stars set star_count="+String.valueOf(str_cnt)+" where id="+String.valueOf(level_id));
 
 
+            Cursor resultSet = mydatabase.rawQuery("Select * from finished_level where id=1", null);
+            int finished_level = 0;
+            if (resultSet.getCount() == 1) {
+                resultSet.moveToFirst();
+                finished_level = (resultSet.getInt(1));
+             //   Toast.makeText(this, String.valueOf(finished_level)+"ee", Toast.LENGTH_SHORT).show();
+
+            }
+            mydatabase.execSQL("update stars set star_count="+String.valueOf(str_cnt)+" where id="+String.valueOf(level_id));
+            if(level_id>finished_level)
+            {
+                mydatabase.execSQL("update finished_level set lvl_id="+String.valueOf(level_id)+" where id=1");
+              //  Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show();
+
+            }
+
 
 
 
@@ -4373,5 +4401,126 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private class MyAsyncTask extends AsyncTask<String, Integer, Double> {
+
+
+
+        public  String ss="",url="";
+
+
+
+
+
+        @Override
+        protected Double doInBackground(String... params) {
+            // TODO Auto-generated method stub
+
+            //  dd=params[0];
+            try {
+                postData();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(Double result){
+
+            //  pb.setVisibility(View.GONE);
+            //   Toast.makeText(MainActivity.this, ss, Toast.LENGTH_SHORT).show();
+            int
+                    start=ss.indexOf("<output>");
+            int
+                    end=ss.indexOf("</output>");
+            String
+                    output_str="";
+            if(end>0 && ss.length()>0) {
+                output_str = ss.substring(start + 8, end);
+                int
+                        start1 = ss.indexOf("<param>");
+                int
+                        end1 = ss.indexOf("</param>");
+                String
+                        param_str = "";
+                param_str = ss.substring(start1 + 7, end1);
+
+//                if (param_str.equals("get_version")) {
+//                    int
+//                            i = 0;
+//                    try {
+//                        i = Integer.valueOf(output_str);
+//                    } catch (Exception e1) {
+//                        //    Log.d("majid", e1.getMessage()+"---"+ss+"---");
+//                    }
+//                    // Log.d("majid",String.valueOf(i));
+//                    if (i > 0) {
+//
+//                        if (i != BuildConfig.VERSION_CODE) {
+//                            Toast.makeText(getBaseContext(), getResources().getString(R.string.need_update_message), Toast.LENGTH_LONG).show();
+//
+//                        }
+//                    }
+//                }
+                if (param_str.equals("new_user")) {
+                    start1 = ss.indexOf("<result>");
+                    end1 = ss.indexOf("</result>");
+                    String
+                            result1 = "";
+                    result1 = ss.substring(start1 + 8, end1);
+                    //     Toast.makeText(getBaseContext(),result1,Toast.LENGTH_SHORT).show();
+                }
+                // Toast.makeText(getBaseContext(),param_str+"////"+output_str,Toast.LENGTH_SHORT).show();
+
+
+            }
+
+
+
+
+
+            //Toast.makeText(getBaseContext(),"ver="+http_result,Toast.LENGTH_SHORT).show();
+//            AlertDialog.Builder builder1 = new AlertDialog.Builder(getBaseContext());
+//            builder1.setTitle(getResources().getString(R.string.update));
+//            builder1.setMessage(getResources().getString(R.string.need_update_message));
+//            builder1.setCancelable(true);
+//            builder1.setNeutralButton(android.R.string.ok,
+//                    new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.cancel();
+//                        }
+//                    });
+//
+
+
+
+//            AlertDialog alert11 = builder1.create();
+//            alert11.show();
+
+
+        }
+
+        protected void onProgressUpdate(Integer... progress){
+            //pb.setProgress(progress[0]);
+        }
+
+        public void postData() throws IOException {
+            HttpClient httpclient = new DefaultHttpClient(); // Create HTTP Client
+            HttpGet httpget = new HttpGet(url); // Set the action you want to do
+            HttpResponse response = httpclient.execute(httpget); // Executeit
+            HttpEntity entity = response.getEntity();
+            InputStream is = entity.getContent(); // Create an InputStream with the response
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf8"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) // Read line by line
+                sb.append(line);
+
+            String resString = sb.toString(); // Result is here
+            ss = resString;
+            //Log.d("majid", resString);
+            is.close();
+        }
+
+    }
 
 }
