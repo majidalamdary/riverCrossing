@@ -180,15 +180,19 @@ public class Menu extends AppCompatActivity {
 
 
         displayFirebaseRegId();
+try {
+    mm = new MyAsyncTask();
 
-        mm =  new MyAsyncTask();
+    {
 
-        {
+        mm.url = getResources().getString(R.string.site_url) + "do.php?param=logs&reg_id=" + URLEncoder.encode(regId) + "&type=log_in";
 
-            mm.url =  getResources().getString(R.string.site_url) +"do.php?param=logs&reg_id="+ URLEncoder.encode(regId)+"&type=log_in";
+        mm.execute("");
+    }
+}catch (Exception e1)
+{
 
-            mm.execute("");
-        }
+}
 
     }
     static boolean
