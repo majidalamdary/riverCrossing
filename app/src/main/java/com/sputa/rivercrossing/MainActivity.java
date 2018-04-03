@@ -3846,10 +3846,26 @@ public class MainActivity extends AppCompatActivity {
 
             img_star3.setAnimation(scal);
 
+
+            Cursor resultSet = mydatabase.rawQuery("Select * from stars where id="+String.valueOf(level_id), null);
+
+            if(resultSet.getCount()==1)
+            {
+                resultSet.moveToFirst();
+
+                int
+                    stars=resultSet.getInt(1);
+                if(stars==0)
+                {
+                    set_coint_count(100,"add");
+                    Toast.makeText(this, "100 سکه به سکه های شما افزوده شد", Toast.LENGTH_SHORT).show();
+                }
+            }
+
             mydatabase.execSQL("update stars set star_count="+String.valueOf(str_cnt)+" where id="+String.valueOf(level_id));
 
 
-            Cursor resultSet = mydatabase.rawQuery("Select * from finished_level where id=1", null);
+            resultSet = mydatabase.rawQuery("Select * from finished_level where id=1", null);
             int finished_level = 0;
             if (resultSet.getCount() == 1) {
                 resultSet.moveToFirst();

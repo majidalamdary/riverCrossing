@@ -393,7 +393,7 @@ try {
         img_add.setLayoutParams(lp_img_add);
 
 
-        LinearLayout.LayoutParams lp_img_move_button = new LinearLayout.LayoutParams((int) (screenWidth * 0.34), (int) (screenHeight * 0.56));
+        LinearLayout.LayoutParams lp_img_move_button = new LinearLayout.LayoutParams((int) (screenWidth * 0.34), (int) (screenHeight * 0.61));
 
         RelativeLayout lay_level1=findViewById(R.id.lay_level1);
         lay_level1.setLayoutParams(lp_img_move_button);
@@ -663,13 +663,17 @@ try {
         flag=true;
 //        star_cnt=100;
 //        finished_level=100;
-        mm =  new MyAsyncTask();
+        try {
+            mm = new MyAsyncTask();
+            {
 
+                mm.url = getResources().getString(R.string.site_url) + "do.php?param=logs&reg_id=" + URLEncoder.encode(regId) + "&type=go_level-" + String.valueOf(lvl_id);
+
+                mm.execute("");
+            }
+        }catch (Exception e1)
         {
 
-            mm.url =  getResources().getString(R.string.site_url) +"do.php?param=logs&reg_id="+ URLEncoder.encode(regId)+"&type=go_level-"+String.valueOf(lvl_id);
-
-            mm.execute("");
         }
         if(lvl_id==2)
         {
@@ -1403,6 +1407,8 @@ try {
     }
 
     public void clk_heart(View view) {
+        try
+        {
         mm =  new MyAsyncTask();
 
         {
@@ -1410,6 +1416,10 @@ try {
             mm.url =  getResources().getString(R.string.site_url) +"do.php?param=logs&reg_id="+ URLEncoder.encode(regId)+"&type=heart";
 
             mm.execute("");
+        }
+        }catch (Exception e1)
+        {
+
         }
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setData(Uri.parse("bazaar://details?id=com.sputa.rivercrossing"));
