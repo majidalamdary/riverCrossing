@@ -1374,14 +1374,20 @@ try {
     }
 
     public void clk_store(View view) {
-        mm =  new MyAsyncTask();
+try {
+    mm = new MyAsyncTask();
 
-        {
+    {
 
-            mm.url =  getResources().getString(R.string.site_url) +"do.php?param=logs&reg_id="+ URLEncoder.encode(regId)+"&type=go_store";
+        mm.url = getResources().getString(R.string.site_url) + "do.php?param=logs&reg_id=" + URLEncoder.encode(regId) + "&type=go_store";
 
-            mm.execute("");
-        }
+        mm.execute("");
+    }
+}
+catch (Exception e2)
+{
+
+}
         startActivity(new Intent(this,Store.class));
     }
     public void set_coint_count(int coint_cnt,String typ)
